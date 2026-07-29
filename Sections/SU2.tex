@@ -1,0 +1,333 @@
+\arrayrulecolor{Periwinkle} 
+
+\renewcommand{\arraystretch}{1.75} % Optional: adjust row height for better readability
+\setlength{\tabcolsep}{8pt} % Optional: adjust column separation for better spacing
+\setlength{\arrayrulewidth}{0.75pt}
+
+
+\section{SU2: Complexity}
+
+\subsection{Introduction}
+
+\begin{itemize}
+    \item compare different algorithm complexity in order to develop more efficient programs
+    \item two important aspects when comparing algorithms:
+        \begin{enumerate}
+            \item the \textcolor{Periwinkle}{memory} of memory used by the algorithm 
+                \begin{itemize}
+                    \item[] memory is determined by the chosen variables and can generally be determined by looking at the code
+                \end{itemize}
+            \item the \textcolor{Periwinkle}{running time} of the algorithm
+                \begin{itemize}
+                    \item[] running time depends on the algorithm and the number of data items processed by the algorithm 
+                \end{itemize}
+        \end{enumerate}
+    \item the focus is on the \textbf{running time} of an algorithm - we are using algorithm analysis rather than machine runtime
+\end{itemize}
+
+\subsection{Overall Perspective}
+
+\begin{itemize}
+    \item if the running time of a programs is represented in terms of a mathematical formula, you can compare the running times of programs to each other 
+    \item the table below has the mathematical formulas for the running times of \textbf{three} different programs performing the \textbf{same} task - all three algorithms create the exact same output 
+    \item the graph shows the running time $T(n)$ in terms of the number of items$(n)$ handled by the algorithm
+\end{itemize}
+
+\noindent
+\begin{minipage}{0.6\textwidth}
+    \includegraphics[width=0.9\textwidth]{../Summaries/Images/2_1.pdf}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+    \begin{center}
+        \renewcommand{\arraystretch}{2.3}
+        \begin{tabular}{|>{\columncolor{Periwinkle!10}}l | >{\columncolor{Periwinkle!10}}c|}
+            \hline
+            \multicolumn{1}{|>{\columncolor{Periwinkle!30}}c|}{\textbf{Program}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{$T(n)$}}\\
+            \hline
+            \multicolumn{1}{| >{\columncolor{Periwinkle!30}}l|}{Program 1} & $\displaystyle \left(\frac{11}{2}n^2 + \frac{47}{2}n + 24\right)$ \\
+            \multicolumn{1}{|>{\columncolor{Periwinkle!30}}l|}{{Program 2}} & $\displaystyle 13n + 22$\\
+            \multicolumn{1}{|>{\columncolor{Periwinkle!30}} c|}{Program 3} & $\displaystyle 19\left[\left(\log_2^(n + 1) \right) + 1\right] + 18$\\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{minipage}
+
+\begin{itemize}
+    \item three methods to analyse the running time of algorithms:
+        \begin{enumerate}
+            \item the \textcolor{Periwinkle}{detailed method} using tau-notation
+            \item the \textcolor{Periwinkle}{simplified model} where each tau is assigned the value equal to 1
+            \item \textcolor{Periwinkle}{asymptotic analysis} using Big Oh notation in which we write $O(n)$
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{Detailed Model}
+
+\begin{itemize}
+    \item \textbf{basic assumption:} the time it takes to \emph{fetch} or \emph{store} a variable in memory is always the same
+\end{itemize}
+
+\begin{center}
+    \begin{minipage}{0.20\textwidth}
+        \begin{tightcode}
+x = y; // or 
+x = 1
+        \end{tightcode}
+    \end{minipage}
+\end{center}
+
+
+\begin{itemize}
+    \item[]{}
+        \begin{itemize}
+            \item the analysis includes the time to \textbf{fetch}
+            \item \mintinline{java}{y} is the first instance; or
+            \item the constant \mintinline{java}{1} in the second instance
+            \item \textbf{plus} the time to \textbf{store} this value in the variable/value \mintinline{java}{x}
+            \item we \textbf{do not fetch} the variable \mintinline{java}{x} as well
+            \item the analysis of this line: $\displaystyle \tau_{\text{fetch}} + \tau_{\text{store}}$
+        \end{itemize}
+\end{itemize}
+
+\newpage
+
+\begin{center}
+    \begin{tabular}{|
+>{\columncolor{Periwinkle!10}}l| 
+>{\columncolor{Periwinkle!10}}l|}
+        \hline
+        \multicolumn{1}{|>{\columncolor{Periwinkle!30}}c|}{\textbf{notation}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{meaning}}\\
+        $\tau_{\text{fetch}}$ & time to fetch the operand from memory\\
+        $\tau_{\text{store}}$ & store the result in memory \\
+        $\tau_{(+,-,\div,\times)}$ & time for basic arithmetic operations\\
+        $\tau_{\leq}$ & time for all comparisons - we use the same symbol for $<$, $>$, ==, $\leq$, $\geq$\\
+        $\tau_{\text{call}}$ & time to pass a parameter is constant and equal to $\tau_{\text{store}}$\\
+        $\tau_{\text{return}}$ & time to call a method and the time it takes to return from a method\\
+        $\tau_{[\cdot]}$ & time for the address calculation based on the index of an array\\
+        \hline
+    \end{tabular}
+\end{center}
+
+\subsubsection{Examples}
+
+\paragraph*{Example 1}
+\noindent
+\begin{minipage}{0.05\textwidth}
+    \phantom{text}
+\end{minipage}
+\begin{minipage}{0.2\textwidth}
+    \begin{tightcode}
+y = y + 1;
+    \end{tightcode}
+\end{minipage}
+\begin{minipage}{0.24\textwidth}
+    \begin{mybox}[Periwinkle]{}
+        $2\tau_{\text{fetch}} + \tau_{+}+  \tau_{\text{store}}$
+    \end{mybox}
+\end{minipage}
+
+\noindent
+\begin{minipage}{0.05\textwidth}
+    \phantom{text}
+\end{minipage}
+\begin{minipage}{0.2\textwidth}
+    \begin{tightcode}
+y = f(x);
+    \end{tightcode}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+    \begin{mybox}[Periwinkle]{}
+        $\tau_{\text{fetch}} + 2\tau_{\text{store}} + \tau_{\text{call}} + T_{f(x)}$
+    \end{mybox}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+    \begin{mybox}[Gray]{}
+        $T_{f(x)}$: running time of method $f(x)$
+    \end{mybox}
+\end{minipage}
+
+\noindent
+\begin{minipage}{0.05\textwidth}
+    \phantom{text}
+\end{minipage}
+\begin{minipage}{0.2\textwidth}
+    \begin{tightcode}
+y = a[i];
+    \end{tightcode}
+\end{minipage}
+\begin{minipage}{0.22\textwidth}
+    \begin{mybox}[Periwinkle]{}
+        $3\tau_{\text{fetch}} + \tau_{[\cdot]} \tau_{\text{store}}$
+    \end{mybox}
+\end{minipage}
+\begin{minipage}{0.25\textwidth}
+    \begin{mybox}[Gray]{}
+        3 fetches: \mintinline{text}{i}; \mintinline{text}{a}; \mintinline{text}{a[i]}
+    \end{mybox}
+\end{minipage}
+
+\paragraph*{Example 2}
+
+\begin{center}
+    \begin{minipage}{0.33\textwidth}
+        \begin{tightcode}
+for(int i = 1; i <= n; ++i)
+        \end{tightcode}
+    \end{minipage}
+\end{center}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \begin{tightcode}
+i = 1;
+    \end{tightcode}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+    only once, at the beginning of the loop\\
+    $\tau_{\text{fetch}} + \tau_{\text{store}}$
+\end{minipage}
+
+\vspace{0.35cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \begin{tightcode}
+i <= n;
+    \end{tightcode}
+\end{minipage}
+\begin{minipage}{0.75\textwidth}
+    $2\tau_{\text{fetch}} + \tau_{<}$ - how many times will the line execute?\\
+    it will start at \mintinline{java}{i = 1} and for the final time for \mintinline{java}{(i = n + 1)} $\rightarrow n + 1$ times\\
+    this part is always executed one more time for the false condition
+\end{minipage}
+
+\vspace{0.35cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \begin{tightcode}
+++i;
+    \end{tightcode}
+\end{minipage}
+\begin{minipage}{0.75\textwidth} 
+    rewrite as \mintinline{java}{i = i + 1} $\rightarrow 2\tau_{\text{fetch}} + \tau_{+} + \tau_{\text{store}}$\\
+    it will start at \mintinline{java}{i = n} and the final time for \mintinline{java}{i = n}, which is $n$ times
+\end{minipage}
+
+\begin{center}
+    therefore, the total running time for this \mintinline{java}{for} loop is:\\
+    $\tau_{\text{fetch}} + \tau_{\text{store}} + (n+1)(2\tau_{\text{fetch}} + \tau_{<}) + n(2\tau_{\text{fetch}} + \tau_{+}) + \tau_{\text{store}}$
+\end{center}
+
+\paragraph*{Example 3}
+
+\begin{center}
+    \begin{minipage}{0.4\textwidth}
+    \begin{tightcode}
+public class Example3 {
+    public static int sum(int n) {
+        int result = 0;
+        for(int i = 1; i <=n; ++1)
+            result += i;
+        return result;
+    }
+}
+    \end{tightcode}
+\end{minipage}
+\end{center}
+
+
+\begin{center}
+    \begin{tabular}{| 
+        >{\columncolor{Periwinkle!10}}c | 
+        >{\columncolor{Periwinkle!10}}l |
+        >{\columncolor{Periwinkle!10}}l |}
+        \hline
+        \multicolumn{1}{|>{\columncolor{Periwinkle!30}}c|}{\textbf{statement}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{code}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{time}}\\
+        \hline
+        3 & \text{\mintinline{java}{result = 0}} & $\tau_{\text{fetch}} + \tau_{\text{store}}$\\
+        4a &  \text{\mintinline{java}{i = 1}} & $\tau_{\text{fetch}} + \tau_{\text{store}}$\\
+        4b & \text{\mintinline{java}{i <= n}} & $(n+1)(2\tau_{\text{fetch}} + \tau_{\text{store}})$\\
+        4c & \text{\mintinline{java}{++i}} & $(n)(2\tau_{\text{fetch}} + \tau_{<} + \tau_{\text{store}})$\\
+        5 & \text{\mintinline{java}{result += i}} & $(n)(2\tau_{\text{fetch}} + \tau_{<} + \tau_{\text{store}})$\\
+        6 & \text{\mintinline{java}{return result}} & $\tau_{\text{fetch}} + \tau_{\text{return}}$\\
+        \hline
+        \hline
+        \multicolumn{3}{|>{\columncolor{Periwinkle!30}}l|}{\makecell{$(n)(6\tau_{\text{fetch}} + 2\tau_{\text{store}} + \tau_{<} + \tau_{\text{+}}) + (5\tau_{\text{fetch}} + 2\tau_{\text{store}} + \tau_{<}) + \tau_{\text{return}}$}}\\
+        \hline
+    \end{tabular}
+\end{center} 
+
+\paragraph*{Example 4}
+
+\begin{center}
+    \begin{minipage}{0.6\textwidth}
+        \begin{tightcode}
+public class Example4 {
+    public static int horner(int[] a, int n, int x) {
+        int result = a[n];
+        for(int i = n - 1; i >= 0; --i)
+            result = result * x + a[i];
+        return result
+    }
+}
+        \end{tightcode}
+    \end{minipage}
+\end{center}
+
+\begin{center}
+    \begin{tabular}{| 
+        >{\columncolor{Periwinkle!10}}c | 
+        >{\columncolor{Periwinkle!10}}l |
+        >{\columncolor{Periwinkle!10}}l |}
+        \hline
+        \multicolumn{1}{|>{\columncolor{Periwinkle!30}}c|}{\textbf{statement}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{code}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{time}}\\
+        3 & \text{\mintinline{java}{int result = a[n]}} & $3\tau_{\text{fetch}} + \tau_{[\cdot]} + \tau_{\text{store}}$\\
+        4a & \text{\mintinline{java}{int i = n - 1}} & $2\tau_{\text{fetch}} + \tau_{-} + \tau_{\text{store}}$\\
+        4b & \text{\mintinline{java}{i >= 0}} & $(n+1)(2\tau_{\text{fetch}} + \tau_{<})$\\
+        4c & \text{\mintinline{java}{--i}} & $(n)(2\tau_{\text{fetch}} + \tau_{-} + \tau_{\text{store}})$\\
+        5 & \text{\mintinline{java}{result = result * x + a[i]}} & $(n)(5\tau_{\text{fetch}} + \tau_{[\cdot]} + \tau_{+} + \tau_{\times} + \tau_{\text{store}})$\\
+        6 & \text{\mintinline{java}{return result}} & $\tau_{\text{fetch}} + \tau_{\text{store}}$\\
+        \hline \hline
+        \multicolumn{3}{|>{\columncolor{Periwinkle!30}}l|}{$(n)(9\tau_{\text{fetch}} + 2\tau_{\text{store}} + \tau_{<} + \tau_{[\cdot]}+ \tau_{+} + \tau_{\times} + \tau_{-}) + (7\tau_{\text{fetch}} + 2\tau_{\text{store}} + \tau_{[\cdot]} + \tau_{-} + \tau_{<} + \tau_{\text{return}})$}\\
+        \hline
+    \end{tabular}
+\end{center} 
+
+\subsection{More on \text{\mintinline{java}{for}} loops}
+
+\begin{center}
+        \begin{tightcode}
+for(int i = 0; i < n; i++)
+    \end{tightcode}
+
+\end{center}
+
+\begin{center}
+    \begin{tabular}{
+        |>{\columncolor{Periwinkle!10}} L{3cm} | 
+        >{\columncolor{Periwinkle!10}} l |
+        >{\columncolor{Periwinkle!10}} l |}
+        \hline
+        \multicolumn{1}{|>{\columncolor{Periwinkle!30}}c|}{\textbf{\# of times the b-part executes}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{\# of times the c-part executes}} &
+        \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{notes}}\\
+        \hline
+        \makecell{more than \textbf{c}:\\$n+1$ times}
+    \end{tabular}
+\end{center}
+
+
+
+
+
+\begin{comment}
+
+    \mintinline{}{}
+
+$\tau_{\text{}}$
+
+\tau_{\text{}}
+
+>{\columncolor{Periwinkle!10}}
+
+\end{comment}

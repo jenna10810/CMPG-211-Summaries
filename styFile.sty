@@ -1,0 +1,339 @@
+\ProvidesPackage{styFile}
+
+
+
+\usepackage[english]{babel}
+
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.5cm]{geometry}
+
+\usepackage{cancel}
+\usepackage{soul}
+
+\newcommand{\hlc}[2][yellow]{{%
+		\colorlet{foo}{#1}%
+		\sethlcolor{foo}\hl{#2}}%
+}
+
+\usepackage{xspace}
+
+
+\usepackage{multirow, makecell}
+
+\usepackage{array}
+\usepackage{pifont}
+
+\usepackage[fleqn]{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{wrapfig}
+\usepackage{subfig}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{minted}
+\usepackage[minted,most]{tcolorbox}
+
+\usepackage[table,dvipsnames]{xcolor}
+\setminted{obeytabs}
+\AtBeginEnvironment{minted}{%
+	\renewcommand{\fcolorbox}[4][]{#4}}
+
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+
+% =========================================================================
+% 1. Standard Text/Code Columns (LRC)
+% Vertically centered fixed-width columns for regular text, code, or strings.
+% Usage: L{width}, R{width}, C{width}
+% =========================================================================
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}m{#1}}
+
+% =========================================================================
+% 2. Neat Math Columns (NMC)
+% Vertically centered fixed-width columns that automatically enter
+% display-style math mode: \(\displaystyle ... \)
+% Usage: NC{width}, NL{width}, NR{width}
+% =========================================================================
+\newcolumntype{NC}[1]{>{\centering\arraybackslash\(\displaystyle}m{#1}<{\)}}
+\newcolumntype{NL}[1]{>{\raggedright\arraybackslash\(\displaystyle}m{#1}<{\)}}
+\newcolumntype{NR}[1]{>{\raggedleft\arraybackslash\(\displaystyle}m{#1}<{\)}}
+
+% Helper macro for multi-line math inside math cells (maintains \displaystyle)
+\newcommand{\mmakecell}[2][c]{\makecell[#1]{$\displaystyle #2$}}
+
+\usepackage{tikz}
+
+
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.18}
+\usepackage{tikz}
+
+
+\usepackage{xspace}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings}
+
+\newtcblisting{hlm}{
+	listing only,
+	nobeforeafter,
+	after={\xspace},
+	hbox,
+	tcbox raise base,
+	fontupper=\ttfamily,
+	colback=pink,
+	colframe=pink,
+	size=fbox
+}
+
+
+\usepackage[round]{natbib}
+\renewcommand\harvardyearleft{\unskip, }
+\renewcommand\harvardyearright[1]{.}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+\hypersetup{breaklinks=true}
+\urlstyle{same}
+
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={black},
+    citecolor={black},
+    urlcolor={blue!80!black}
+}
+
+\usepackage{pifont}
+%%%%%%%%%%%%%%%%%% Centres the caption %%%%%%%%%%%%%%%%%%
+\usepackage{caption}
+\captionsetup{justification=centering}
+
+
+%%%%%%%%%%%% MATRIX
+\usepackage{blkarray}
+\usepackage{bigstrut}
+
+
+\usepackage{nicematrix}
+
+%%%%%% bullets with colours etc
+\usepackage{tikz}
+
+\newcommand*\circled[2]{%
+    \protect\tikz[baseline=(char.base)]{%
+        \protect\node[shape=circle, fill=#1, draw, inner sep=2pt] (char) {\textcolor{black}{#2}};}}
+
+\usepackage{enumitem}
+
+\usepackage{rotating}
+
+
+
+% % Add this inside your .sty file (or preamble)
+% \newtcblisting{tightcode}[2][]{
+%     listing engine=minted,      % Use minted for syntax highlighting
+%     minted language={#2},       % Pass the programming language
+%     listing only,               % Only display the code, no text execution
+%     % hbox,                       % Shrinks the box width tightly to the code
+%     colback=black!20,            % Soft light gray background
+%     colframe=gray!5,           % Match border to background to remove dark lines
+%     top=0.2cm,                  % 0.2cm padding top
+%     bottom=0.2cm,               % 0.2cm padding bottom
+%     left=0.5cm,                 % Small internal padding for the box
+%     right=0.2cm,                % 0.2cm padding right
+%     #1,                         % Allows passing extra options dynamically
+%     % xleftmargin forces space inside the listing for the numbers to show up
+%     minted options={linenos=true, numbersep=6pt, fontsize=\small}
+% }
+
+\RequirePackage{tcolorbox}
+\tcbuselibrary{minted}
+\usepackage{comment}
+
+% 1. Set default language macro
+% \newcommand{\filelang}{java}
+
+% % 2. Define custom key for language switching
+% \tcbset{
+%     lang/.code={\tcbset{minted language=#1}}
+% }
+
+% % 3. Environment Definition
+% \newtcblisting{tightcode}[2][\filelang]{%
+%     listing engine=minted,
+%     minted language={#1},
+%     listing only,
+%     colback=black!20,
+%     colframe=gray!5,
+%     top=0.2cm,
+%     bottom=0.2cm,
+%     left=0.5cm,
+%     right=0.2cm,
+%     minted options={linenos=true, numbersep=6pt, fontsize=\small},
+%     #2%
+% }
+
+\RequirePackage{tcolorbox}
+\tcbuselibrary{minted}
+
+% 1. Global / File-level default language (change this per file or globally)
+\newcommand{\filelang}{java}
+
+% 2. Environment Definition
+\newtcblisting{tightcode}[1][\filelang]{%
+    listing engine=minted,
+    minted language={#1}, % Dynamically set to default (\filelang) or overridden
+    listing only,
+    hbox,
+    colback=black!20,
+    colframe=gray!5,
+    top=0.2cm,
+    bottom=0.2cm,
+    left=0.5cm,
+    right=0.2cm,
+    minted options={linenos=true, numbersep=6pt, fontsize=\small}
+}
+
+
+
+
+
+
+
+% \RequirePackage{tcolorbox}
+% \tcbuselibrary{minted}
+
+% % Define a macro for your file's default language
+% \newcommand{\filelang}{java}
+
+% % Parameter #1: Minted language (defaults to \filelang)
+% % Parameter #2: Extra tcolorbox options (optional, default empty)
+% \newtcblisting{tightcode}[2][\filelang]{
+%     listing engine=minted,
+%     minted language={#1}, % Uses #1 as language
+%     listing only,
+%     colback=black!20,
+%     colframe=gray!5,
+%     top=0.2cm,
+%     bottom=0.2cm,
+%     left=0.5cm,
+%     right=0.2cm,
+%     minted options={linenos=true, numbersep=6pt, fontsize=\small},
+%     #2 % Extra tcolorbox options passed second
+% }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% lemma
+\newtcolorbox[auto counter,number within=subsubsection]{lemmaCounter}[2][]{%
+colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+title=Examp.~\thetcbcounter: #2,#1,
+before upper={\setlist[itemize]{left=1pt}}}
+
+\NewTColorBox[use counter from=lemmaCounter]{lemmabox}{ O{red} m d"" !O{} }
+{enhanced,colframe=#1!75!black,colback=#1!5!white,
+fonttitle=\bfseries,title=Lemma {\thetcbcounter~#2},
+IfValueT={#3}{watermark text={#3}},#4,
+before upper={\setlist[itemize]{left=1pt}}}
+
+
+%% definition
+\newtcolorbox[auto counter,number within=subsubsection]{definitionCounter}[2][]{%
+colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+title=Examp.~\thetcbcounter: #2,#1,
+before upper={\setlist[itemize]{left=1pt}}}
+
+\NewTColorBox[use counter from=definitionCounter]{definitionbox}{ O{red} m d"" !O{} }
+{enhanced,colframe=#1!75!black,colback=#1!5!white,
+fonttitle=\bfseries,title=definition {\thetcbcounter~#2},
+IfValueT={#3}{watermark text={#3}},#4,
+before upper={\setlist[itemize]{left=1pt}}}
+
+%% corollary
+\newtcolorbox[auto counter,number within=subsubsection]{corollaryCounter}[2][]{%
+colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+title=Examp.~\thetcbcounter: #2,#1,
+before upper={\setlist[itemize]{left=1pt}}}
+
+\NewTColorBox[use counter from=corollaryCounter]{corollarybox}{ O{red} m d"" !O{} }
+{enhanced,colframe=#1!75!black,colback=#1!5!white,
+fonttitle=\bfseries,title=Corollary {\thetcbcounter~#2},
+IfValueT={#3}{watermark text={#3}},#4,
+before upper={\setlist[itemize]{left=1pt}}}
+
+
+%% theorem
+\newtcolorbox[auto counter,number within=subsubsection]{theoremCounter}[2][]{%
+colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+title=Examp.~\thetcbcounter: #2,#1,
+before upper={\setlist[itemize]{left=1pt}}}
+
+\NewTColorBox[use counter from=theoremCounter]{theorembox}{ O{red} m d"" !O{} }
+{enhanced,colframe=#1!75!black,colback=#1!5!white,
+fonttitle=\bfseries,title=Theorem {\thetcbcounter~#2},
+IfValueT={#3}{watermark text={#3}},#4,
+before upper={\setlist[itemize]{left=1pt}}}
+
+%% notation
+\newtcolorbox[auto counter,number within=subsubsection]{notationCounter}[2][]{%
+colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+title=Examp.~\thetcbcounter: #2,#1,
+before upper={\setlist[itemize]{left=1pt}}}
+
+\NewTColorBox[use counter from=notationCounter]{notationbox}{ O{red} m d"" !O{} }
+{enhanced,colframe=#1!75!black,colback=#1!5!white,
+fonttitle=\bfseries,title=Notation {\thetcbcounter~#2},
+IfValueT={#3}{watermark text={#3}},#4,
+before upper={\setlist[itemize]{left=1pt}}}
+
+%% examples
+\newtcolorbox[auto counter,number within=subsection]{exampleCounter}[2][]{%
+colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+title=Examp.~\thetcbcounter: #2,#1,
+before upper={\setlist[itemize]{left=1pt}}
+} 
+
+\NewTColorBox[use counter from=exampleCounter]{examplebox}{ O{red} m d"" !O{} }
+{enhanced,colframe=#1!75!black,colback=#1!5!white,
+fonttitle=\bfseries,title=Example {\thetcbcounter~#2},
+IfValueT={#3}{watermark text={#3}},#4, 
+before upper={\setlist[itemize]{left=1pt}} 
+} 
+
+%% algorithms
+\newtcolorbox[auto counter,number within=subsubsection]{algorithmCounter}[2][]{%
+colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+title=Examp.~\thetcbcounter: #2,#1,
+before upper={\setlist[itemize]{left=1pt}}
+} 
+
+\NewTColorBox[use counter from=algorithmCounter]{algorithmbox}{ O{red} m d"" !O{} }
+{enhanced,colframe=#1!75!black,colback=#1!5!white,
+fonttitle=\bfseries,title=Algorithm {\thetcbcounter~#2},
+IfValueT={#3}{watermark text={#3}},#4, 
+before upper={\setlist[itemize]{left=1pt}} 
+} 
+
+%% propositions
+\newtcolorbox[auto counter,number within=subsubsection]{propositionCounter}[2][]{%
+colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+title=Examp.~\thetcbcounter: #2,#1,
+before upper={\setlist[itemize]{left=1pt}}
+} 
+
+\NewTColorBox[use counter from=algorithmCounter]{propositionbox}{ O{red} m d"" !O{} }
+{enhanced,colframe=#1!75!black,colback=#1!5!white,
+fonttitle=\bfseries,title=Proposition {\thetcbcounter~#2},
+IfValueT={#3}{watermark text={#3}},#4, 
+before upper={\setlist[itemize]{left=1pt}} 
+} 

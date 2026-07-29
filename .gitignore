@@ -1,0 +1,16 @@
+# macOS junk
+.DS_Store
+
+# LaTeX build outputs
+*.aux
+*.fdb_latexmk
+*.fls
+*.listing
+*.log
+*.out
+*.pdf
+*.synctex.gz
+*.toc
+
+# Minted cache
+_minted/
