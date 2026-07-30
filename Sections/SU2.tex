@@ -245,12 +245,12 @@ public class Example3 {
         \hline
         \multicolumn{1}{|>{\columncolor{Periwinkle!30}}c|}{\textbf{statement}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{code}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{time}}\\
         \hline
-        3 & \text{\mintinline{java}{result = 0}} & $\tau_{\text{fetch}} + \tau_{\text{store}}$\\
-        4a &  \text{\mintinline{java}{i = 1}} & $\tau_{\text{fetch}} + \tau_{\text{store}}$\\
-        4b & \text{\mintinline{java}{i <= n}} & $(n+1)(2\tau_{\text{fetch}} + \tau_{\text{store}})$\\
-        4c & \text{\mintinline{java}{++i}} & $(n)(2\tau_{\text{fetch}} + \tau_{<} + \tau_{\text{store}})$\\
-        5 & \text{\mintinline{java}{result += i}} & $(n)(2\tau_{\text{fetch}} + \tau_{<} + \tau_{\text{store}})$\\
-        6 & \text{\mintinline{java}{return result}} & $\tau_{\text{fetch}} + \tau_{\text{return}}$\\
+        3 &  \mintinline{java}{result = 0} & $\tau_{\text{fetch}} + \tau_{\text{store}}$\\
+        4a &   \mintinline{java}{i = 1} & $\tau_{\text{fetch}} + \tau_{\text{store}}$\\
+        4b &  \mintinline{java}{i <= n} & $(n+1)(2\tau_{\text{fetch}} + \tau_{\text{store}})$\\
+        4c &  \mintinline{java}{++i} & $(n)(2\tau_{\text{fetch}} + \tau_{<} + \tau_{\text{store}})$\\
+        5 &  \mintinline{java}{result += i} & $(n)(2\tau_{\text{fetch}} + \tau_{<} + \tau_{\text{store}})$\\
+        6 &  \mintinline{java}{return result} & $\tau_{\text{fetch}} + \tau_{\text{return}}$\\
         \hline
         \hline
         \multicolumn{3}{|>{\columncolor{Periwinkle!30}}l|}{\makecell{$(n)(6\tau_{\text{fetch}} + 2\tau_{\text{store}} + \tau_{<} + \tau_{\text{+}}) + (5\tau_{\text{fetch}} + 2\tau_{\text{store}} + \tau_{<}) + \tau_{\text{return}}$}}\\
@@ -282,45 +282,124 @@ public class Example4 {
         >{\columncolor{Periwinkle!10}}l |}
         \hline
         \multicolumn{1}{|>{\columncolor{Periwinkle!30}}c|}{\textbf{statement}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{code}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{time}}\\
-        3 & \text{\mintinline{java}{int result = a[n]}} & $3\tau_{\text{fetch}} + \tau_{[\cdot]} + \tau_{\text{store}}$\\
-        4a & \text{\mintinline{java}{int i = n - 1}} & $2\tau_{\text{fetch}} + \tau_{-} + \tau_{\text{store}}$\\
-        4b & \text{\mintinline{java}{i >= 0}} & $(n+1)(2\tau_{\text{fetch}} + \tau_{<})$\\
-        4c & \text{\mintinline{java}{--i}} & $(n)(2\tau_{\text{fetch}} + \tau_{-} + \tau_{\text{store}})$\\
-        5 & \text{\mintinline{java}{result = result * x + a[i]}} & $(n)(5\tau_{\text{fetch}} + \tau_{[\cdot]} + \tau_{+} + \tau_{\times} + \tau_{\text{store}})$\\
-        6 & \text{\mintinline{java}{return result}} & $\tau_{\text{fetch}} + \tau_{\text{store}}$\\
+        \hline
+        3 &  \mintinline{java}{int result = a[n]} & $3\tau_{\text{fetch}} + \tau_{[\cdot]} + \tau_{\text{store}}$\\
+        4a &  \mintinline{java}{int i = n - 1} & $2\tau_{\text{fetch}} + \tau_{-} + \tau_{\text{store}}$\\
+        4b &  \mintinline{java}{i >= 0} & $(n+1)(2\tau_{\text{fetch}} + \tau_{<})$\\
+        4c &  \mintinline{java}{--i} & $(n)(2\tau_{\text{fetch}} + \tau_{-} + \tau_{\text{store}})$\\
+        5 &  \mintinline{java}{result = result * x + a[i]} & $(n)(5\tau_{\text{fetch}} + \tau_{[\cdot]} + \tau_{+} + \tau_{\times} + \tau_{\text{store}})$\\
+        6 &  \mintinline{java}{return result} & $\tau_{\text{fetch}} + \tau_{\text{store}}$\\
         \hline \hline
         \multicolumn{3}{|>{\columncolor{Periwinkle!30}}l|}{$(n)(9\tau_{\text{fetch}} + 2\tau_{\text{store}} + \tau_{<} + \tau_{[\cdot]}+ \tau_{+} + \tau_{\times} + \tau_{-}) + (7\tau_{\text{fetch}} + 2\tau_{\text{store}} + \tau_{[\cdot]} + \tau_{-} + \tau_{<} + \tau_{\text{return}})$}\\
         \hline
     \end{tabular}
 \end{center} 
 
-\subsection{More on \text{\mintinline{java}{for}} loops}
+\subsection{More on  \text{\mintinline{java}{for}} loops}
 
 \begin{center}
-        \begin{tightcode}
+    \noindent
+    \begin{minipage}{0.32\textwidth}
+            \begin{tightcode}
 for(int i = 0; i < n; i++)
-    \end{tightcode}
-
+        \end{tightcode}
+    \end{minipage}
 \end{center}
 
+
 \begin{center}
-    \begin{tabular}{
-        |>{\columncolor{Periwinkle!10}} L{3cm} | 
-        >{\columncolor{Periwinkle!10}} l |
-        >{\columncolor{Periwinkle!10}} l |}
-        \hline
-        \multicolumn{1}{|>{\columncolor{Periwinkle!30}}c|}{\textbf{\# of times the b-part executes}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{\# of times the c-part executes}} &
-        \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{notes}}\\
-        \hline
-        \makecell{more than \textbf{c}:\\$n+1$ times}
+    \renewcommand{\arraystretch}{2.5}
+    \begin{tabular}{l l l}
+        \textbf{\# of times part b is executed:}  & $n+1$ & one more time than \textbf{c}\\
+        \textbf{\# of times part c is executed:} & $n$ & from 0 to $n - 1$ is $n$ times\\
+        \textbf{notes:} if $n = 3$ & \multicolumn{2}{l}{\makecell[l]{the valid values are 0; 1; 2\\
+    this is three values $\therefore n$ times}}
     \end{tabular}
 \end{center}
+
+% \renewcommand{\arraystretch}{1.75}
+
+\begin{center}
+    \noindent
+    \begin{minipage}{0.28\textwidth}
+        \begin{tightcode}
+for(i = 1; i < n; i++)
+        \end{tightcode}
+    \end{minipage}
+\end{center}
+
+\newpage
+
+\begin{center}
+    \begin{tabular}{l l l}
+        \textbf{\# of times part b is executed:}  & $n$ & one more time than \textbf{c}\\
+        \textbf{\# of times part c is executed:} & $n$ & from 1 to $(n - 1)$ is $n$ times\\
+        \textbf{notes:} if $n=3$& \multicolumn{2}{l}{\makecell[l]{the valid values are 1; 2\\this is two values $\therefore (n-1)$ times}}
+    \end{tabular}
+\end{center}
+
+\begin{center}
+    \begin{minipage}{0.29\textwidth}
+        \begin{tightcode}
+for(i = 0; i <= n; i++)
+        \end{tightcode}
+    \end{minipage}
+\end{center}
+
+
+\begin{center}
+    \begin{tabular}{l l l}
+        \textbf{\# of times part b is executed:}  & $n + 2$ & one more time than \textbf{c}\\
+        \textbf{\# of times part c is executed:} & $n+1$ & from 0 to $n$ is $(n + 1)$ times\\
+        \textbf{notes:} if $n=3$& \multicolumn{2}{l}{\makecell[l]{the valid values are 0; 1; 2; 3\\this is four values $\therefore (n+1)$ times}}
+    \end{tabular}
+\end{center}
+
+\begin{center}
+    \begin{minipage}{0.29\textwidth}
+        \begin{tightcode}
+for(i = 1; i <= n; i++)
+        \end{tightcode}
+    \end{minipage}
+\end{center}
+
+\begin{center}
+    \begin{tabular}{l l l}
+        \textbf{\# of times part b is executed:}  & $n + 1$ & one more time than \textbf{c}\\
+        \textbf{\# of times part c is executed:} & $n$ & from 1 to $n$ is $n$ times\\
+        \textbf{notes:} if $n=3$& \multicolumn{2}{l}{\makecell[l]{the valid values are 1; 2; 3\\this is three values $\therefore n$ times}}
+    \end{tabular}
+\end{center}
+
+\begin{center}
+    \begin{minipage}{0.35\textwidth}
+        \begin{tightcode}
+for(i = 2; i <= (n + 2); i++)
+        \end{tightcode}
+    \end{minipage}
+\end{center}
+
+\begin{center}
+    \begin{tabular}{l l l}
+        \textbf{\# of times part b is executed:}  & $n + 2$ & one more time than \textbf{c}\\
+        \textbf{\# of times part c is executed:} & $n+1$ & from 1 to $n$ is $(n+1)$ times\\
+        \textbf{notes:} if $n=3$& \multicolumn{2}{l}{\makecell[l]{the valid values are 2; 3; 4; 5\\this is four values $\therefore n+1$ times}}
+    \end{tabular}
+\end{center}
+
+
+\raggedright \includegraphics[width=1\textwidth]{../Summaries/Images/2_2.pdf}
 
 
 
 
 
 \begin{comment}
+
+
+
+\includegraphics[width=0.9\textwidth]{../Summaries/Images/2_1.pdf}
+
 
     \mintinline{}{}
 
