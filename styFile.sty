@@ -144,7 +144,7 @@
 
 \usepackage{comment}
 
-
+\usepackage{pdflscape}
 
 % 1. Global / File-level default language (change this per file or globally)
 \newcommand{\filelang}{java}
@@ -169,6 +169,25 @@
 % }
 
 % 2. Environment Definition
+% \newtcblisting{tightcode}[1][\filelang]{%
+%     listing engine=minted,
+%     minted language={#1},
+%     listing only,
+%     varwidth upper,              % Auto-sizes box width AND keeps line numbers!
+%     colback=black!20,
+%     colframe=gray!5,
+%     top=0.2cm,
+%     bottom=0.2cm,
+%     left=0.5cm,
+%     right=0.2cm,
+%     minted options={
+%         linenos=true, 
+%         numbersep=6pt, 
+%         fontsize=\small,
+%         xleftmargin=0.1cm        % Margin reserved for line numbers inside the box
+%     }
+% }
+
 \newtcblisting{tightcode}[1][\filelang]{%
     listing engine=minted,
     minted language={#1},
@@ -188,21 +207,14 @@
     }
 }
 
+\usepackage{setspace}
 
-
-
-
-
-% MYBOX
-\newtcolorbox[auto counter,number within=subsubsection]{lemmaCounter}[2][]{%
-colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
-% title=Examp.~\thetcbcounter: #2,#1,
-before upper={\setlist[itemize]{left=1pt}}}
-
-\NewTColorBox[use counter from=lemmaCounter]{mybox}{ O{red} m d"" !O{} }
+\NewTColorBox[]{mybox}{ O{red} m d"" !O{} }
 {enhanced,colframe=#1!75!black,colback=#1!5!white,
-fonttitle=\bfseries,title=Lemma {\thetcbcounter~#2},
+fonttitle=\bfseries,title={#2},
 IfValueT={#3}{watermark text={#3}},#4,
-before upper={\setlist[itemize]{left=1pt}}}
-
-
+before upper={%
+    \setlist[itemize]{left=0pt,labelsep=0.5em}%
+    \setlist[enumerate]{left=0pt,labelsep=0.5em}%
+ }%
+}

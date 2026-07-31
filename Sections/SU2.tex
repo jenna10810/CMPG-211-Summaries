@@ -35,11 +35,10 @@
 
 \noindent
 \begin{minipage}{0.6\textwidth}
-    \includegraphics[width=0.9\textwidth]{../Summaries/Images/2_1.pdf}
+    \includegraphics[width=0.9\textwidth]{../CMPG221Summaries/Images/2_1.pdf}
 \end{minipage}
 \begin{minipage}{0.4\textwidth}
     \begin{center}
-        \renewcommand{\arraystretch}{2.3}
         \begin{tabular}{|>{\columncolor{Periwinkle!10}}l | >{\columncolor{Periwinkle!10}}c|}
             \hline
             \multicolumn{1}{|>{\columncolor{Periwinkle!30}}c|}{\textbf{Program}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{$T(n)$}}\\
@@ -61,7 +60,7 @@
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{Detailed Model}
+\subsection{Detailed Model}
 
 \begin{itemize}
     \item \textbf{basic assumption:} the time it takes to \emph{fetch} or \emph{store} a variable in memory is always the same
@@ -88,8 +87,6 @@ x = 1
             \item the analysis of this line: $\displaystyle \tau_{\text{fetch}} + \tau_{\text{store}}$
         \end{itemize}
 \end{itemize}
-
-\newpage
 
 \begin{center}
     \begin{tabular}{|
@@ -236,7 +233,6 @@ public class Example3 {
 \end{minipage}
 \end{center}
 
-
 \begin{center}
     \begin{tabular}{| 
         >{\columncolor{Periwinkle!10}}c | 
@@ -258,7 +254,32 @@ public class Example3 {
     \end{tabular}
 \end{center} 
 
+
+
+
+
 \paragraph*{Example 4}
+
+\noindent
+\begin{center}
+    \begin{tabular}{| 
+        >{\columncolor{Periwinkle!10}}c | 
+        >{\columncolor{Periwinkle!10}}l |
+        >{\columncolor{Periwinkle!10}}l |}
+        \hline
+        \multicolumn{1}{|>{\columncolor{Periwinkle!30}}c|}{\textbf{statement}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{code}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{time}}\\
+        \hline
+        3 &  \mintinline{java}{int result = a[n]} & $3\tau_{\text{fetch}} + \tau_{[\cdot]} + \tau_{\text{store}}$\\
+        4a &  \mintinline{java}{int i = n - 1} & $2\tau_{\text{fetch}} + \tau_{-} + \tau_{\text{store}}$\\
+        4b &  \mintinline{java}{i >= 0} & $(n+1)(2\tau_{\text{fetch}} + \tau_{<})$\\
+        4c &  \mintinline{java}{--i} & $(n)(2\tau_{\text{fetch}} + \tau_{-} + \tau_{\text{store}})$\\
+        5 &  \mintinline{java}{result = result * x + a[i]} & $(n)(5\tau_{\text{fetch}} + \tau_{[\cdot]} + \tau_{+} + \tau_{\times} + \tau_{\text{store}})$\\
+        6 &  \mintinline{java}{return result} & $\tau_{\text{fetch}} + \tau_{\text{return}}$\\
+        \hline \hline
+        \multicolumn{3}{|>{\columncolor{Periwinkle!30}}l|}{$(n)(9\tau_{\text{fetch}} + 2\tau_{\text{store}} + \tau_{<} + \tau_{[\cdot]}+ \tau_{+} + \tau_{\times} + \tau_{-}) + (7\tau_{\text{fetch}} + 2\tau_{\text{store}} + \tau_{[\cdot]} + \tau_{-} + \tau_{<} + \tau_{\text{return}})$}\\
+        \hline
+    \end{tabular}
+\end{center}
 
 \begin{center}
     \begin{minipage}{0.6\textwidth}
@@ -275,26 +296,6 @@ public class Example4 {
     \end{minipage}
 \end{center}
 
-\begin{center}
-    \begin{tabular}{| 
-        >{\columncolor{Periwinkle!10}}c | 
-        >{\columncolor{Periwinkle!10}}l |
-        >{\columncolor{Periwinkle!10}}l |}
-        \hline
-        \multicolumn{1}{|>{\columncolor{Periwinkle!30}}c|}{\textbf{statement}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{code}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{time}}\\
-        \hline
-        3 &  \mintinline{java}{int result = a[n]} & $3\tau_{\text{fetch}} + \tau_{[\cdot]} + \tau_{\text{store}}$\\
-        4a &  \mintinline{java}{int i = n - 1} & $2\tau_{\text{fetch}} + \tau_{-} + \tau_{\text{store}}$\\
-        4b &  \mintinline{java}{i >= 0} & $(n+1)(2\tau_{\text{fetch}} + \tau_{<})$\\
-        4c &  \mintinline{java}{--i} & $(n)(2\tau_{\text{fetch}} + \tau_{-} + \tau_{\text{store}})$\\
-        5 &  \mintinline{java}{result = result * x + a[i]} & $(n)(5\tau_{\text{fetch}} + \tau_{[\cdot]} + \tau_{+} + \tau_{\times} + \tau_{\text{store}})$\\
-        6 &  \mintinline{java}{return result} & $\tau_{\text{fetch}} + \tau_{\text{store}}$\\
-        \hline \hline
-        \multicolumn{3}{|>{\columncolor{Periwinkle!30}}l|}{$(n)(9\tau_{\text{fetch}} + 2\tau_{\text{store}} + \tau_{<} + \tau_{[\cdot]}+ \tau_{+} + \tau_{\times} + \tau_{-}) + (7\tau_{\text{fetch}} + 2\tau_{\text{store}} + \tau_{[\cdot]} + \tau_{-} + \tau_{<} + \tau_{\text{return}})$}\\
-        \hline
-    \end{tabular}
-\end{center} 
-
 \subsection{More on  \text{\mintinline{java}{for}} loops}
 
 \begin{center}
@@ -308,7 +309,6 @@ for(int i = 0; i < n; i++)
 
 
 \begin{center}
-    \renewcommand{\arraystretch}{2.5}
     \begin{tabular}{l l l}
         \textbf{\# of times part b is executed:}  & $n+1$ & one more time than \textbf{c}\\
         \textbf{\# of times part c is executed:} & $n$ & from 0 to $n - 1$ is $n$ times\\
@@ -327,8 +327,6 @@ for(i = 1; i < n; i++)
         \end{tightcode}
     \end{minipage}
 \end{center}
-
-\newpage
 
 \begin{center}
     \begin{tabular}{l l l}
@@ -388,7 +386,7 @@ for(i = 2; i <= (n + 2); i++)
 \end{center}
 
 
-\raggedright \includegraphics[width=1\textwidth]{../Summaries/Images/2_2.pdf}
+\raggedright \includegraphics[width=1\textwidth]{../CMPG221Summaries/Images/2_2.pdf}
 
 \subsection{Simplified Model}
 
@@ -432,10 +430,10 @@ for(int i = 1; i <= n; i++)
 \subsubsection{The Double \text{\mintinline{java}{for}} Loop}
 
 \noindent
-\begin{minipage}{0.62\textwidth}
-    \begin{center}
+\begin{center}
+    \begin{minipage}{0.62\textwidth}
         \begin{tightcode}
-public class Example1 {
+    public class Example1 {
     public static int geometricSeriesSum(int x, int n) {
         int sum = 0;
         for(int i = 0; i <= n; ++i) {
@@ -446,32 +444,34 @@ public class Example1 {
         }
         return sum;
     }
-}
+    }
 
         \end{tightcode}
-    \end{center}
-\end{minipage}
-\begin{minipage}{0.35\textwidth}
-    \begin{center}
-        \begin{tabular}{|>{\columncolor{Periwinkle!10}} c | 
-            >{\columncolor{Periwinkle!10}} l |
-            >{\columncolor{Periwinkle!10}} c |}
-            \hline
-            \multicolumn{1}{|>{\columncolor{Periwinkle!30}}c|}{\textbf{statement}} &
-            \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{code}} &
-            \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{time}}\\
-            \hline
-            3 & \mintinline{java}{int sum = 0} & 2\\
-            4a & \mintinline{java}{int i = 0} & 2\\
-            4b & \mintinline{java}{i <= n} & $3(n+2)$\\
-            4c & \mintinline{java}{++i} & 4(n+1)\\
-            5 & \mintinline{java}{int prod = 1} & $2(n+1)$\\
-            8 & \mintinline{java}{sum += prod} & 4(n+1)\\
-            6 & \mintinline{java}{return result} & 2\\
-            \hline
-        \end{tabular}
-    \end{center}
-\end{minipage}
+    \end{minipage}
+\end{center}
+
+\noindent
+
+\begin{center}
+    \begin{tabular}{|>{\columncolor{Periwinkle!10}} c | 
+        >{\columncolor{Periwinkle!10}} l |
+        >{\columncolor{Periwinkle!10}} c |}
+        \hline
+        \multicolumn{1}{|>{\columncolor{Periwinkle!30}}c|}{\textbf{statement}} &
+        \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{code}} &
+        \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{time}}\\
+        \hline
+        3 & \mintinline{java}{int sum = 0} & 2\\
+        4a & \mintinline{java}{int i = 0} & 2\\
+        4b & \mintinline{java}{i <= n} & $3(n+2)$\\
+        4c & \mintinline{java}{++i} & 4(n+1)\\
+        5 & \mintinline{java}{int prod = 1} & $2(n+1)$\\
+        8 & \mintinline{java}{sum += prod} & 4(n+1)\\
+        6 & \mintinline{java}{return result} & 2\\
+        \hline
+    \end{tabular}
+\end{center}
+
 
 \begin{itemize}
     \item the summation's first and last values are the first and last valid values of the counter from the \textcolor{Periwinkle}{outer} \mintinline{java}{for} loop
@@ -529,9 +529,215 @@ return sum
     \item a \textbf{double} \mintinline{java}{for} loop leads to an equation dependant on $n^2$
 \end{itemize}
 
+\newpage
+
+\subsection{Asymptotic Analysis - \text{$O(n)$}}
+
+\begin{itemize}
+    \item the aim of this section is to show how detailed, and especially simplified analysis, is used to determine one single term for an algorithm
+    \item expressed as $O(X)$, where $X$ is expressed in terms of $n$ - which is the number of items manipulated by the algorithm to be analysed
+    \item from detailed $\rightarrow$ simplified $\rightarrow$ $O(n)$ is a progression in understanding - it is very hard to understand big $O$ without the other two 
+    \item the result of simplified analysis is a line we show on a graph (we can compare various lines on the same graph) where each line represents the running time of a specific algorithm
+    \item the cost of the algorithm is mainly determined by the \textcolor{Periwinkle}{power or $n$} in the equation $\Rightarrow n^2$ is worse than $n$
+    \item to go from simplified to asymptotic, you just keep the largest power of $n$
+\end{itemize}
+
+\subsubsection{Big \text{$O$}}
+
+\begin{mybox}[Periwinkle]{definition}
+    \begin{itemize}
+        \item[] consider a function $f(n)$ that is non-negative for all integers $n \geq 0$
+        \item[] we say that "$f(n)$ is big $O$ $g(n)$" which we write $f(n) = O(g(n))$, 
+        \item[] if there exists an integer $n_0$ and a constant $c > 0$ so that for all integers,
+    \end{itemize}
+
+    \begin{center}
+         $n \leq n_0$, $f(n) \leq c g(n)$
+    \end{center}
+\end{mybox}
+
+\begin{mybox}[Periwinkle]{properties}
+    \begin{itemize}
+        \item[] if $f_1(n) = O(g_1(n))$ and $f_2(n) = O(g_2(n))$
+            \begin{itemize}
+                \item [1.] $f_1(n) + f_2(n) = O(\text{max}(g_1(n)))$
+                \item [2.] $f_1(n) \times f_2(n) = O(g_1(n) \times g_2(n))$
+                \item [3.] If $f(n) = a_mn^m + a_{m-1}n^{m-1} + a_{m-2}n^{m-2} + \cdots + a_3n^3 + a_2n^2 + a_1n + a_0$ then,
+            \end{itemize}
+    \end{itemize}
+
+    \vspace{-0.5cm}
+
+    \begin{center}
+        $f(n) = O(g(n^m)) $
+    \end{center}
+\end{mybox}
+
+\subsubsection{Examples}
+
+\paragraph*{Example 1}
+
+\begin{center}
+    \begin{minipage}{0.58\textwidth}
+        \begin{tightcode}
+public class Example1 {
+    public static int horner(int[] a, int n, int x) {
+        int result = a[n];
+        for(int i = n - 1; i >= 0; --i) {
+            result = result * x + a[i];
+        }
+        return result;
+    }
+}
+        \end{tightcode}
+    \end{minipage}
+\end{center}
+
+
+% \begin{landscape}
+% \begin{center}
+%     \begin{tabular}{| 
+%         >{\columncolor{Periwinkle!10}}c | 
+%         >{\columncolor{Periwinkle!10}}l |
+%         >{\columncolor{Periwinkle!10}}c |
+%         >{\columncolor{Periwinkle!10}}l |
+%         >{\columncolor{Periwinkle!10}}l |}
+%         \hline
+%         \multicolumn{1}{|>{\columncolor{Periwinkle!30}}c|}{\textbf{statement}} & 
+%         \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{code}} & 
+%         \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{detailed model}} & 
+%         \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{simple model}} &
+%         \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{big $O$}\\
+%         \hline
+%         3 &  \mintinline{java}{int result = a[n]} & $3\tau_{\text{fetch}} + \tau_{[\cdot]} + \tau_{\text{store}}$ & 5 $O(1)$ & $O(1)$\\
+%         4a &  \mintinline{java}{int i = n - 1} & $2\tau_{\text{fetch}} + \tau_{-} + \tau_{\text{store}}$ & 4 & $O(1)$\\
+%         4b &  \mintinline{java}{i >= 0} & $(n+1)(2\tau_{\text{fetch} + \tau_{\text{store}}} + \tau_{<})$ & $3n + 3$ & $O(n)$\\
+%         4c &  \mintinline{java}{--i} & $(n)(2\tau_{\text{fetch}} + \tau_{-} + \tau_{\text{store}})$ & $4n$ & $O(n)$\\
+%         5 &  \mintinline{java}{result = result * x + a[i]} & $(n)(5\tau_{\text{fetch}} + \tau_{[\cdot]} + \tau_{+} + \tau_{\times} + \tau_{\text{store}})$ & $9n$ & $O(n)$\\
+%         8 &  \mintinline{java}{return result} & $\tau_{\text{fetch}} + \tau_{\text{return}}$ & 2 & $O(1)$\\
+%         \hline \hline
+%         \multicolumn{3}{|>{\columncolor{Periwinkle!30}}l|}{$(n)(9\tau_{\text{fetch}} + 2\tau_{\text{store}} + \tau_{<} + \tau_{[\cdot]}+ \tau_{+} + \tau_{\times} + \tau_{-}) + (7\tau_{\text{fetch}} + 2\tau_{\text{store}} + \tau_{[\cdot]} + \tau_{-} + \tau_{<} + \tau_{\text{return}})$} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{$16n +14$} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{$O(n)$}\\
+%         \hline
+%     \end{tabular}
+% \end{center} 
+% \end{landscape}
+
+\begin{center}
+    \includegraphics[width=1\textwidth]{../CMPG221Summaries/Images/2_3.pdf}
+\end{center}
+
+\subsection{Rules for \text{\mintinline{java}{Java}}}
+
+\begin{mybox}[Periwinkle]{iteration}
+    \noindent
+    \begin{minipage}{0.8\textwidth}
+        the worst-case running time of a sequence of \mintinline{java}{Java} such as:\\
+        is $O(\text{max}(T_1(n), T_2(n), \cdots, T_m(n)))$, where $S_i$ , the i$^{\text{th}}$ statement in the sequence, is $O(T_i(n))$
+    \end{minipage}
+    \begin{minipage}{0.03\textwidth}
+        \phantom{text}
+    \end{minipage}
+    \begin{minipage}{0.12\textwidth}
+        \begin{tightcode}
+S_1;
+S_2;
+S_m;
+        \end{tightcode}
+    \end{minipage}
+\end{mybox}
+
+
+\begin{mybox}[Periwinkle]{sequential composition}
+    \noindent
+    \begin{minipage}{0.3\textwidth}
+        \begin{center}
+            \begin{tightcode}
+for(S_1; S_2; S_3) {
+    S_4;
+}
+            \end{tightcode}
+        \end{center}
+    \end{minipage}
+    \begin{minipage}{0.05\textwidth}
+        \phantom{text}
+    \end{minipage}
+    \begin{minipage}{0.6\textwidth}
+        the worst-case running time of a \mintinline{java}{Java for} loop such as:\\
+        is $O(\text{max}(T_1(n), T_2(n) \times (I(n) + 1), T_3 \times I(n), T_4(n) \times I(n)))$\\
+        where the running time of statement $S_1$ is $O(T_i(n))$, for $i = 1,2,3,4$ and $I(n)$ is the number of iterations executed in the worst case
+    \end{minipage}
+\end{mybox}
+
+\begin{mybox}[Periwinkle]{conditional execution}
+    \noindent
+    \begin{minipage}{0.7\textwidth}
+        the worst-case running time of a \mintinline{java}{Java if-then-else} statement such as:\\
+        is $O(\text{max}(T_1(1), T_2(n), T_3(n)))$, for $i = 1,2,3$
+    \end{minipage}
+    \begin{minipage}{0.1\textwidth}
+        \phantom{text}
+    \end{minipage}
+    \begin{minipage}{0.16\textwidth}
+        \begin{tightcode}
+if(S_1)
+    S_2;
+else
+    S_3;
+        \end{tightcode}
+    \end{minipage}
+\end{mybox}
+
+\noindent
+\begin{minipage}{0.2\textwidth}
+    \vspace{-1.5cm}
+    \subsection{Examples}
+
+    \paragraph{Example 1}
+
+    program to compute $\displaystyle \sum^{j}_{f=0} a_i$ for $0 \leq j < n$
+\end{minipage}
+\begin{minipage}{0.15\textwidth}
+    \phantom{text}
+\end{minipage}
+\begin{minipage}{0.6\textwidth}
+    \begin{tightcode}
+public class Example1 {
+    public static void prefixSums(int[] a, int n) {
+        for(int j = n - 1; j >= 0; --j) {
+            int sum = 0;
+            for(int i = 0l i <= j; ++i) {
+                sum += a[n];
+            }
+            a[j] = sum;
+        }
+    }
+}
+    \end{tightcode}
+\end{minipage}
+
+% SD2 -> 9/13
 
 
 
+
+
+
+\begin{comment}
+
+
+
+\begin{center}
+    \includegraphics[width=0.9\textwidth]{../CMPG221Summaries/Images/2_1.pdf}
+\end{center}
+
+    \mintinline{}{}
+
+
+
+\tau_{\text{}}
+
+>{\columncolor{Periwinkle!10}}
+\end{mybox}
 
 
 
