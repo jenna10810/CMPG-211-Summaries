@@ -690,9 +690,9 @@ else
 \noindent
 \begin{minipage}{0.2\textwidth}
     \vspace{-1.5cm}
-    \subsection{Examples}
+    \subsubsection{Examples}
 
-    \paragraph{Example 1}
+    \paragraph*{Example 1}
 
     program to compute $\displaystyle \sum^{j}_{f=0} a_i$ for $0 \leq j < n$
 \end{minipage}
@@ -705,7 +705,7 @@ public class Example1 {
     public static void prefixSums(int[] a, int n) {
         for(int j = n - 1; j >= 0; --j) {
             int sum = 0;
-            for(int i = 0l i <= j; ++i) {
+            for(int i = 0; i <= j; ++i) {
                 sum += a[n];
             }
             a[j] = sum;
@@ -715,9 +715,315 @@ public class Example1 {
     \end{tightcode}
 \end{minipage}
 
-% SD2 -> 9/13
+\newpage
+
+\begin{center}
+    \begin{tabular}{|>{\columncolor{Periwinkle!10}} c |
+        >{\columncolor{Periwinkle!10}} l |
+        >{\columncolor{Periwinkle!10}} l |}
+        \hline
+        \multicolumn{1}{| >{\columncolor{Periwinkle!30}} c |}{\textbf{line}} & 
+        \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{\textbf{code}} & 
+        \multicolumn{1}{>{\columncolor{Periwinkle!30}}c |}{\textbf{time}} \\
+        3a & \mintinline{java}{int j = n - 1} & $O(1)$\\
+        3b & \mintinline{java}{j <= 0} & $O(1) \times O(n)$ iterations\\
+        3c & \mintinline{java}{--j} & $O(1) \times O(n)$ iterations\\
+        6 & \mintinline{java}{int sum = 0} & $O(1) \times O(n)$ iterations\\
+        5a & \mintinline{java}{int i = 0} & $O(1) \times O(n)$ iterations\\
+        5b & \mintinline{java}{i <= j} & $O(1) \times O(n^2)$ iterations\\
+        5c & \mintinline{java}{++i} & $O(1) \times O(n^2)$ iterations\\
+        6 & \mintinline{java}{sum += a[n]} & $O(1) \times O(n^2)$ iterations\\
+        8 & \mintinline{java}{a[j] = sum} & $O(1) \times O(n)$ iterations\\
+        \hline \hline
+        \multicolumn{2}{|>{\columncolor{Periwinkle!10}}c|}{\textbf{total}} & \multicolumn{1}{>{\columncolor{Periwinkle!30}}c|}{text}
+        \\
+        \hline
+    \end{tabular}
+\end{center}
+
+\subsection{Bucket Sort}
+
+\begin{mybox}[Periwinkle]{}
+    \begin{itemize}
+        \item[] sort the numbers below:
+    \end{itemize}
+
+    \begin{center}
+        $4 \hspace{0.5cm} 2 \hspace{0.5cm} 5 \hspace{0.5cm} 4 \hspace{0.5cm} 3 \hspace{0.5cm} 3 \hspace{0.5cm} 2 \hspace{0.5cm} 1 \hspace{0.5cm}2 \hspace{0.5cm} 3 \hspace{0.5cm} 1 \hspace{0.5cm} 2$
+    \end{center}
+
+    \begin{enumerate}
+        \item create a bucket (array entry) for each possible value in the list
+        \item set each entry to zero initially
+        \item associate the value in the unsorted list with an index of an array of buckets 
+        \item increment the correct bucket as you move through the list
+        \item the first item is $4$ - so use $4$ as the index and increment \mintinline{java}{{bucketArr[4]}}
+        \item after one pass: \mintinline{java}{bucketArr[1] == 2}; \mintinline{java}{bucketArr[2] == 4}, \mintinline{java}{bucketArr[3] == 3}
+        \item the sorted array is achieved by printing the index of \mintinline{java}{bucketArr}, the number of times indicated by the value $-2$ times $1$; $4$ times $2$, etc 
+    \end{enumerate}
+\end{mybox}
 
 
+\begin{mybox}[OrangeRed]{other notes}
+
+    \noindent
+    \begin{minipage}{0.4\textwidth}
+        \begin{itemize}
+            \item[] \textbf{parameter breakdown:}
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}{0.6\textwidth}
+        \begin{tightcode}
+public static void bucketSort(int[] a, int m) {
+        \end{tightcode}
+    \end{minipage}
+
+    \begin{itemize}
+        \item []{}
+            \begin{itemize}
+                \item \mintinline{java}{int[] a}: the unsorted array of non-negative integers (the array you want to sort)
+                \item \mintinline{java}{int m}: the maximum possible range (ie, all elements \texttt{a} satisfy $0 \leq a[i] < m$)
+            \end{itemize}
+    \end{itemize}
+
+    \noindent
+    \begin{minipage}{0.4\textwidth}
+        \begin{itemize}
+            \item[] \textbf{bucket initialisation:}
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}{0.6\textwidth}
+        \begin{tightcode}
+int[] buckets = new int[m];
+        \end{tightcode}
+    \end{minipage}
+
+    \vspace{0.25cm}
+
+%     \noindent
+%     \begin{minipage}{0.5\textwidth}
+%         \begin{itemize}
+%             \item[]{}
+%                 \begin{itemize}
+%                     \item creates a new array names \texttt{buckets} of size \texttt{m}
+%                 \end{itemize}
+%         \end{itemize}
+%     \end{minipage}
+%     \begin{minipage}{0.5\textwidth}
+%         \begin{tightcode}
+% for(int j = 0; j < m; ++j) {
+%         \end{tightcode}
+%     \end{minipage}
+
+%     \vspace{0.25cm}
+
+%     \noindent
+%     \begin{minipage}{0.4\textwidth}
+%         \begin{itemize}
+%             \item[] \textbf{counting frequencies:}
+%         \end{itemize}
+%     \end{minipage}
+%     \begin{minipage}{0.6\textwidth}
+%         \begin{tightcode}
+% for(int i = 0; i < a.length; ++i) {
+%         \end{tightcode}
+%     \end{minipage}
+    
+    % \vspace{0.25cm}
+
+%     \begin{itemize}
+%         \item[]{}
+%             \begin{itemize}
+%                 \item iterates through each element in the input array \texttt{a}
+%             \end{itemize}
+%     \end{itemize}
+
+%     \noindent   
+%     \begin{minipage}{0.47\textwidth}
+%         \begin{itemize}
+%             \item[]{}
+%                 \begin{itemize}
+%                     \item \texttt{buckets[a[i]]}: takes the value of \texttt{a[i]} and uses it directly as an index for \texttt{buckets}, incrementing the bucket's tally by 1
+%                 \end{itemize}
+%         \end{itemize}
+%     \end{minipage}
+%     \begin{minipage}{0.03\textwidth}
+%         \phantom{text}
+%     \end{minipage}
+%     \begin{minipage}{0.5\textwidth}
+%         \begin{tightcode}
+% ++buckets[a[i]];
+%         \end{tightcode}
+%     \end{minipage}
+
+%     \begin{itemize}
+%         \item []{}
+%             \begin{itemize}
+%                 \item eg, is \texttt{a[i] = 3}, \texttt{buckets[3]} is incremented - at the end of this loop, \texttt{buckets[j]} contains the total number of times the values \texttt{j} appears in array \texttt{a}
+%             \end{itemize}
+%     \end{itemize}
+    
+%     \noindent
+%     \begin{minipage}{0.5\textwidth}
+%         \begin{itemize}
+%             \item[] \textbf{sorting the array \texttt{a} in place}
+%             \item [] \textcolor{OrangeRed}{outer loop}
+%         \end{itemize}
+%     \end{minipage}
+%     \begin{minipage}{0.5\textwidth}
+%         \begin{tightcode}
+% for(int i = 0, j = 0; j < m; ++j) {
+%         \end{tightcode}
+%     \end{minipage}
+
+%     \vspace{0.25cm}
+
+%     \begin{itemize}
+%         \item[]{}
+%         \begin{itemize}
+%             \item iterates through each bucket index from \texttt{j} to \texttt{0} to \texttt{m - 1} - guarantees that the values are processed in increasing sorted order
+%             \item \texttt{i} pointer: keeps track of the current insertion position in array \texttt{a}
+%         \end{itemize}
+%     \end{itemize}   
+\end{mybox}
+
+
+
+
+\begin{mybox}[OrangeRed]{}
+    \noindent
+    \begin{minipage}{0.5\textwidth}
+        \begin{itemize}
+            \item[]{}
+                \begin{itemize}
+                    \item creates a new array names \texttt{buckets} of size \texttt{m}
+                \end{itemize}
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+        \begin{tightcode}
+for(int j = 0; j < m; ++j) {
+        \end{tightcode}
+    \end{minipage}
+
+    \vspace{0.25cm}
+
+    \noindent
+    \begin{minipage}{0.4\textwidth}
+        \begin{itemize}
+            \item[] \textbf{counting frequencies:}
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}{0.6\textwidth}
+        \begin{tightcode}
+for(int i = 0; i < a.length; ++i) {
+        \end{tightcode}
+    \end{minipage}
+    
+    \vspace{0.25cm}
+
+    \begin{itemize}
+        \item[]{}
+            \begin{itemize}
+                \item iterates through each element in the input array \texttt{a}
+            \end{itemize}
+    \end{itemize}
+
+    \noindent   
+    \begin{minipage}{0.47\textwidth}
+        \begin{itemize}
+            \item[]{}
+                \begin{itemize}
+                    \item \texttt{buckets[a[i]]}: takes the value of \texttt{a[i]} and uses it directly as an index for \texttt{buckets}, incrementing the bucket's tally by 1
+                \end{itemize}
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}{0.03\textwidth}
+        \phantom{text}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+        \begin{tightcode}
+++buckets[a[i]];
+        \end{tightcode}
+    \end{minipage}
+
+    \begin{itemize}
+        \item []{}
+            \begin{itemize}
+                \item eg, is \texttt{a[i] = 3}, \texttt{buckets[3]} is incremented - at the end of this loop, \texttt{buckets[j]} contains the total number of times the values \texttt{j} appears in array \texttt{a}
+            \end{itemize}
+    \end{itemize}
+    
+    \noindent
+    \begin{minipage}{0.5\textwidth}
+        \begin{itemize}
+            \item[] \textbf{sorting the array \texttt{a} in place}
+            \item [] \textcolor{OrangeRed}{outer loop}
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+        \begin{tightcode}
+for(int i = 0, j = 0; j < m; ++j) {
+        \end{tightcode}
+    \end{minipage}
+
+    \vspace{0.25cm}
+
+    \begin{itemize}
+        \item[]{}
+        \begin{itemize}
+            \item iterates through each bucket index from \texttt{j} to \texttt{0} to \texttt{m - 1} - guarantees that the values are processed in increasing sorted order
+            \item \texttt{i} pointer: keeps track of the current insertion position in array \texttt{a}
+        \end{itemize}
+    \end{itemize} 
+    
+    \noindent
+    \begin{minipage}{0.5\textwidth}
+        \begin{itemize}
+            \item[] \textcolor{OrangeRed}{inner loop}
+                \begin{itemize}
+                    \item runs \texttt{buckets[j]} times the counter (of \texttt{j})
+                    \item writes \texttt{j} back into \texttt{a[i]}
+                \end{itemize}
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+        \begin{tightcode}
+for(int k = buckets[j]; k > 0; --k) {
+    a[i++] = j;
+}
+        \end{tightcode}
+    \end{minipage}
+
+    \begin{itemize}
+    \item[]{}
+        \begin{itemize}
+            \item increments \texttt{i} using the post-increment operator (\texttt{i++}) to move to the next position in \texttt{a}
+        \end{itemize}
+\end{itemize}
+\end{mybox}
+
+\begin{center}
+    \begin{tightcode}
+public class Example1 {
+    public static void bucketSort(int [] a, int m) {
+        int[] buckets = new int[m];
+
+        for(int j = 0; j < m; ++j) {
+            buckets[j] = 0;
+        }
+        for(int i = 0; i < a.length; ++i) {
+            ++buckets[a[i]];
+        }
+        for(int i = 0, j = 0; j < m; ++j) {
+            for(int k = buckets[j]; k > 0; --k) {
+                a[i++] = j;
+            }
+        }
+    }
+}
+    \end{tightcode}
+\end{center}
 
 
 
