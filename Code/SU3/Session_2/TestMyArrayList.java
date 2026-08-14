@@ -25,5 +25,3 @@ public class TestMyArrayList {
     System.out.println(list);
   }
 }
-
-

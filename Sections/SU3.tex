@@ -477,8 +477,6 @@
     \item all of the classes making use of the array must have the \texttt{CompareTo()} method
 \end{itemize}
 
-
-
 \subsection{For a Programmer to Use Our Class}
 
 \begin{itemize}
@@ -502,7 +500,7 @@
 \newpage
 
 %S2
-\section{Filtering a List}
+\section{SU3: Filtering a List}
 
 \subsection{Improvements to our \texttt{MyArrayList} Class}
 
@@ -761,7 +759,167 @@ public void filter(E low, E high)
 \texttt{data must be replaced by temp}\\
 \texttt{size must be replaced by j}
 
+%14/21
+\subsubsection{Step 3 - Write Down the Special Cases}
 
+\paragraph*{Make a Numbered List}
+\begin{enumerate}
+    \item the calling array could be empty 
+    \item \texttt{low} may be larger than \texttt{high}
+\end{enumerate}
+
+\paragraph*{Propose a Solution}
+
+\begin{enumerate}
+    \item check if \texttt{size == 0} and \mintinline{java}{return}
+    \item check if \texttt{low > high} and \mintinline{java}{return}
+\end{enumerate}
+
+%15/21
+\subsubsection{Write the Code}
+
+\javacode{x}{firstline=59, lastline=79}{Code/SU3/Session_2/MyArrayList.java}
+
+
+% \noindent
+% \begin{minipage}{0.15\textwidth}
+%     \phantom{text}
+% \end{minipage}
+% \begin{minipage}{0.85\textwidth}
+%     \begin{itemize}
+%         \item[] in the generic class, the programmer does not know the data type \texttt{E} - the programmer does not know how to compare these values with each other 
+%         \item[] it depends on the specific nature of \texttt{E} - are they \texttt{Circles}? \texttt{Rectangles}? numbers?
+%     \end{itemize}
+% \end{minipage}
+
+
+% \noindent
+% \begin{minipage}[b]{0.15\textwidth}
+%     \textcolor{RedOrange}{\textbf{line 70:}}
+% \end{minipage}
+% \begin{minipage}[t]{0.85\textwidth}
+%     \begin{itemize}
+%         \item[] however, you refer to the class using a generic array - so the class should contain the implementation for \texttt{CompareTo()} 
+%         \item[] \texttt{CompareTo()} should return a number:
+%             \begin{itemize}
+%                 \item $>0$: the calling object is larger than the parameter object
+%                 \item $=0$: the calling object and the parameter object are equal
+%                 \item $<0$: the calling object is less than the parameter object
+%             \end{itemize}
+%         \item[] in the case of our program, we use objects of the class \mintinline{java}{Integer} (the wrapper class for \texttt{int}) - the class \texttt{Integer} does not contain a \texttt{CompareTo()} method
+%     \end{itemize}
+% \end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 61:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] create a new array called \texttt{temp} to be traversed with the counter \texttt{j}
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\newpage
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 70:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] traverse the calling array with counter \texttt{i}
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 71 - 72:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] compare each value to the parameters
+        \item[] if \texttt{data[i] >= low} and \texttt{data[i] <= high} then:
+            \begin{itemize}
+                \item[] \texttt{temp[j] = data[i]}
+                \item[] \texttt{j++}
+            \end{itemize}
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.5cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 77:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] \texttt{data} (\textcolor{RedOrange}{calling array}) must be replaced by \texttt{temp}
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 78:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] \texttt{size} \textcolor{RedOrange}{(the calling array's size)} must be replaced with \texttt{j}
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+
+%19/21
+\subsubsection{Design a Test Method}
+
+\javacode{x}{firstline=1, lastline=27}{Code/SU3/Session_2/TestMyArrayList.java}
+
+\begin{tightcode}[text]
+TEST WITH EMPTY LIST: []
+[]
+\end{tightcode}
+
+\newpage
+
+\begin{tightcode}
+Test with low > high
+[6, 5, 4, 3, 2, 5, 1]
+Test with low < high 
+[5, 3, 4, 5]
+\end{tightcode}
 
 
 
