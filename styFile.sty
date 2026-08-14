@@ -1,47 +1,74 @@
 \ProvidesPackage{styFile}
 
-
-
+% =========================================================================
+% 1. Core Page Setup & Regional Settings
+% =========================================================================
 \usepackage[english]{babel}
+\usepackage[a4paper, top=2cm, bottom=2cm, left=2cm, right=2cm, marginparwidth=1.5cm]{geometry}
+\usepackage{comment}
+\usepackage{setspace}
 
-\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.5cm]{geometry}
+% =========================================================================
+% 2. Colors, Highlighting, & Text Formatting
+% =========================================================================
+\usepackage[table, dvipsnames]{xcolor}  % Custom colors & table row/column coloring
+\usepackage{cancel}                     % Strike-through in math or text
+\usepackage{soul}                       % Highlighting and text decoration
+\usepackage{xspace}                     % Smart spacing after macros
+\usepackage{pifont}                     % Special symbols (e.g., dingbats, checks)
 
-\usepackage{cancel}
-\usepackage{soul}
-
+% Custom text highlighting macro using soul and xcolor
 \newcommand{\hlc}[2][yellow]{{%
-		\colorlet{foo}{#1}%
-		\sethlcolor{foo}\hl{#2}}%
+        \colorlet{foo}{#1}%
+        \sethlcolor{foo}\hl{#2}}%
 }
 
-\usepackage{xspace}
-
-\usepackage{multirow, makecell}
-
-\usepackage{array}
-\usepackage{pifont}
-
-\usepackage[fleqn]{mathtools}
-\usepackage{amsmath}
+% =========================================================================
+% 3. Math Support
+% =========================================================================
+\usepackage[fleqn]{mathtools}         % Loads and extends amsmath
 \usepackage{amssymb}
+
+% =========================================================================
+% 4. Figures, Images, Diagrams, & Captions
+% =========================================================================
 \usepackage{graphicx}
-\usepackage{mathtools}
 \usepackage{wrapfig}
 \usepackage{subfig}
-\usepackage{tikz}
 \usepackage{float}
-\usepackage{enumitem}
-\usepackage{listings}
-\usepackage{multicol}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.18}
+
+\usepackage{caption}
+\captionsetup{justification=centering}
+
+% Custom circled text using TikZ
+\newcommand*\circled[2]{%
+    \protect\tikz[baseline=(char.base)]{%
+        \protect\node[shape=circle, fill=#1, draw, inner sep=2pt] (char) {\textcolor{black}{#2}};}}
+
+% =========================================================================
+% 5. Tables & Alignment
+% =========================================================================
+\usepackage{array}
 \usepackage{multirow}
-\usepackage{minted}
-\usepackage[minted,most]{tcolorbox}
+\usepackage{makecell}
+\usepackage{pdflscape}                % Landscape support for wide tables/pages
+\usepackage{rotating}                 % Rotating table cells or content
+\usepackage{blkarray}                 % Advanced matrix layouts with labels
+\usepackage{bigstrut}                 % Struts for matrix/table formatting
+\usepackage{nicematrix}               % Modern matrix and table utilities
 
-\usepackage[table,dvipsnames]{xcolor}
-\setminted{obeytabs}
-\AtBeginEnvironment{minted}{%
-	\renewcommand{\fcolorbox}[4][]{#4}}
+% Standard Text/Code Columns (Vertically Centered)
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}m{#1}}
 
+% =========================================================================
+% 6. Section & List Formatting
+% =========================================================================
 \usepackage{titlesec}
 \setcounter{secnumdepth}{4}
 \titleformat{\paragraph}
@@ -49,150 +76,43 @@
 \titlespacing*{\paragraph}
 {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
+\usepackage{enumitem}                 % Custom lists (itemize, enumerate)
 
 % =========================================================================
-% 1. Standard Text/Code Columns (LRC)
-% Vertically centered fixed-width columns for regular text, code, or strings.
-% Usage: L{width}, R{width}, C{width}
+% 7. Code Listings & Fancy Boxes (Minted & tcolorbox)
 % =========================================================================
-\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
-\newcolumntype{L}[1]{>{\raggedright\arraybackslash}m{#1}}
-\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}m{#1}}
-
-% =========================================================================
-% 2. Neat Math Columns (NMC)
-% Vertically centered fixed-width columns that automatically enter
-% display-style math mode: \(\displaystyle ... \)
-% Usage: NC{width}, NL{width}, NR{width}
-% =========================================================================
-% \newcolumntype{NC}[1]{>{\centering\arraybackslash\(\displaystyle}m{#1}<{\)}}
-% \newcolumntype{NL}[1]{>{\raggedright\arraybackslash\(\displaystyle}m{#1}<{\)}}
-% \newcolumntype{NR}[1]{>{\raggedleft\arraybackslash\(\displaystyle}m{#1}<{\)}}
-
-% Helper macro for multi-line math inside math cells (maintains \displaystyle)
-% \newcommand{\mmakecell}[2][c]{\makecell[#1]{$\displaystyle #2$}}
-
-\usepackage{tikz}
-
-
-\usepackage{pgfplots}
-\usepackage{pgfplotstable}
-\pgfplotsset{compat=1.18}
-\usepackage{tikz}
-
-
-\usepackage{xspace}
-\usepackage{tcolorbox}
+\usepackage{varwidth}                 % Required for auto-sizing boxes
+\usepackage{listings}
+\usepackage{minted}
+\usepackage[minted, most]{tcolorbox}
 \tcbuselibrary{listings}
 
-\newtcblisting{hlm}{
-	listing only,
-	nobeforeafter,
-	after={\xspace},
-	hbox,
-	tcbox raise base,
-	fontupper=\ttfamily,
-	colback=pink,
-	colframe=pink,
-	size=fbox
-}
+\setminted{obeytabs}
+\AtBeginEnvironment{minted}{%
+    \renewcommand{\fcolorbox}[4][]{#4}}
 
-
-\usepackage[round]{natbib}
-\renewcommand\harvardyearleft{\unskip, }
-\renewcommand\harvardyearright[1]{.}
-\usepackage[hyphens]{url}
-\usepackage{hyperref}
-\hypersetup{breaklinks=true}
-\urlstyle{same}
-
-\usepackage{xcolor}
-\hypersetup{
-    colorlinks,
-    linkcolor={black},
-    citecolor={black},
-    urlcolor={blue!80!black}
-}
-
-\usepackage{pifont}
-%%%%%%%%%%%%%%%%%% Centres the caption %%%%%%%%%%%%%%%%%%
-\usepackage{caption}
-\captionsetup{justification=centering}
-
-
-%%%%%%%%%%%% MATRIX
-\usepackage{blkarray}
-\usepackage{bigstrut}
-
-
-\usepackage{nicematrix}
-
-%%%%%% bullets with colours etc
-\usepackage{tikz}
-
-\newcommand*\circled[2]{%
-    \protect\tikz[baseline=(char.base)]{%
-        \protect\node[shape=circle, fill=#1, draw, inner sep=2pt] (char) {\textcolor{black}{#2}};}}
-
-\usepackage{enumitem}
-
-\usepackage{rotating}
-
-
-
-\RequirePackage{tcolorbox}
-
-\usepackage{comment}
-
-\usepackage{pdflscape}
-
-% 1. Global / File-level default language (change this per file or globally)
+% Default language for tightcode environment
 \newcommand{\filelang}{java}
 
+% Inline highlight code macro
+\newtcblisting{hlm}{
+    listing only,
+    nobeforeafter,
+    after={\xspace},
+    hbox,
+    tcbox raise base,
+    fontupper=\ttfamily,
+    colback=pink,
+    colframe=pink,
+    size=fbox
+}
 
-\RequirePackage{varwidth}        % Load the varwidth package
-\RequirePackage{tcolorbox}
-\tcbuselibrary{minted}
-% 2. Environment Definition
-% \newtcblisting{tightcode}[1][\filelang]{%
-%     listing engine=minted,
-%     minted language={#1}, % Dynamically set to default (\filelang) or overridden
-%     listing only,
-%     % hbox adding this removes the line numbers
-%     colback=black!20,
-%     colframe=gray!5,
-%     top=0.2cm,
-%     bottom=0.2cm,
-%     left=0.5cm,
-%     right=0.2cm,
-%     minted options={linenos=true, numbersep=6pt, fontsize=\small}
-% }
-
-% 2. Environment Definition
-% \newtcblisting{tightcode}[1][\filelang]{%
-%     listing engine=minted,
-%     minted language={#1},
-%     listing only,
-%     varwidth upper,              % Auto-sizes box width AND keeps line numbers!
-%     colback=black!20,
-%     colframe=gray!5,
-%     top=0.2cm,
-%     bottom=0.2cm,
-%     left=0.5cm,
-%     right=0.2cm,
-%     minted options={
-%         linenos=true, 
-%         numbersep=6pt, 
-%         fontsize=\small,
-%         xleftmargin=0.1cm        % Margin reserved for line numbers inside the box
-%     }
-% }
-
+% Custom auto-sizing code environment
 \newtcblisting{tightcode}[1][\filelang]{%
     listing engine=minted,
     minted language={#1},
     listing only,
-    varwidth upper,              % Auto-sizes box width AND keeps line numbers!
+    varwidth upper,              % Auto-sizes box width AND keeps line numbers
     colback=black!20,
     colframe=gray!5,
     top=0.2cm,
@@ -207,8 +127,7 @@
     }
 }
 
-\usepackage{setspace}
-
+% Custom styled message box
 \NewTColorBox[]{mybox}{ O{red} m d"" !O{} }
 {enhanced,colframe=#1!75!black,colback=#1!5!white,
 fonttitle=\bfseries,title={#2},
@@ -218,3 +137,109 @@ before upper={%
     \setlist[enumerate]{left=0pt,labelsep=0.5em}%
  }%
 }
+
+% Definition Box
+\newtcolorbox[auto counter,number within=subsubsection]{definitionCounter}[2][]{%
+colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+title=Examp.~\thetcbcounter: #2,#1,
+before upper={\setlist[itemize]{left=1pt}}}
+
+\NewTColorBox[use counter from=definitionCounter]{definitionbox}{ O{red} m d"" !O{} }
+{enhanced,colframe=#1!75!black,colback=#1!5!white,
+fonttitle=\bfseries,title=definition {\thetcbcounter~#2},
+IfValueT={#3}{watermark text={#3}},#4,
+before upper={\setlist[itemize]{left=1pt}}}
+
+
+\usepackage[T1]{fontenc}
+
+% ==========================
+% MINTED + JAVACODE SETUP (FIXED HIGHLIGHTING)
+% ==========================
+
+% \newcommand{\javacode}[4][java]{%
+%   \tcbinputlisting{%
+%     breakable,%
+%     listing engine=minted,  %          % <-- Forces tcolorbox to use Pygments/minted 
+%     listing file={\detokenize{#4}},#
+%     minted language=#1,%
+%     minted style=default, %            % <-- Forces Pygments color scheme
+%     minted options={
+%         obeytabs=true,%
+%         tabsize=4,%
+%         linenos,%
+%         fontsize=\small,%
+%         numbersep=6pt,%
+%         breaklines=true,%
+%         #3
+%     },
+%     colback=gray!10,%
+%     colframe=gray!70,%
+%     coltitle=black,%
+%     fonttitle=\bfseries,%
+%     title={\detokenize{#2}},%
+%     auto outer arc,%
+%     arc=5pt,%
+%     boxrule=0.8pt,%
+%     left=15pt,%
+%     right=5pt,%
+%     top=5pt,%
+%     bottom=5pt,%
+%     listing only,%
+%     fontupper=\ttfamily\small,%
+%   }%
+% }
+
+\newcommand{\javacode}[4][java]{%
+\tcbinputlisting{%
+breakable,
+listing engine=minted, % <-- Forces tcolorbox to use Pygments/minted
+listing file={#4},
+minted language=#1,
+minted style=default, % <-- Forces Pygments color scheme
+minted options={
+obeytabs=true,
+tabsize=4,
+linenos,
+fontsize=\small,
+numbersep=6pt,
+breaklines=true,
+#3
+},
+colback=gray!10,
+colframe=gray!70,
+coltitle=black,
+fonttitle=\bfseries,
+% title={\detokenize{#2}},
+auto outer arc,
+arc=5pt,
+boxrule=0.8pt,
+left=15pt,
+right=5pt,
+top=5pt,
+bottom=5pt,
+listing only,
+fontupper=\ttfamily\small
+}%
+} 
+
+\usepackage{dashrule}
+
+
+% =========================================================================
+% 8. Bibliography & Hyperlinks (Keep Hyperref Near the End)
+% =========================================================================
+\usepackage[round]{natbib}
+\renewcommand\harvardyearleft{\unskip, }
+\renewcommand\harvardyearright[1]{.}
+
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+\hypersetup{
+    breaklinks=true,
+    colorlinks=true,
+    linkcolor={black},
+    citecolor={black},
+    urlcolor={blue!80!black}
+}
+\urlstyle{same}

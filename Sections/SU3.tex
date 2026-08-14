@@ -1,0 +1,813 @@
+\arrayrulecolor{RedOrange} 
+
+\renewcommand{\arraystretch}{1.75} % Optional: adjust row height for better readability
+\setlength{\tabcolsep}{8pt} % Optional: adjust column separation for better spacing
+\setlength{\arrayrulewidth}{0.75pt}
+
+% S1
+\section{SU3: Generic Arrays}
+
+\begin{itemize}
+    \item the overall aim is to create (1) a generic array (2) that can be sorted
+    \item why generic arrays?
+        \begin{itemize}
+            \item the motivation behind this work is the key aspect - not the \texttt{Java} implementation
+            \item the next level of programming is creating programs to be used by other programmers, not the users of computers
+            \item the classes we are developing are aimed to be used by other \texttt{Java} programmers to decrease their workload $\rightarrow$ reusability and productivity
+            \item the code for a specific \texttt{Java} class does not need to be written every time a programmer wants to create a sortable array of some class's objects
+            \item instead of using normal arrays, the programmer will use our custom array 
+        \end{itemize}
+\end{itemize}
+
+\subsection{Test Program}
+
+\javacode{x}{}{Code/SU3/Session_1/Snippets/TestMyArrayList.java}
+
+\begin{itemize}
+    \item instead of using typical arrays and writing all of the manipulation code, programmers can use this class for any array 
+    \item the programmer only needs to state what \textbf{type} of data they are storing in the array (\textcolor{RedOrange}{\textbf{line 4}})
+    \item the new array provides a method to \textbf{add} an item to the array (\textcolor{RedOrange}{\textbf{line 16 - 23}})
+\end{itemize}
+
+\newpage
+
+%5/16
+\subsection{Data Structures and Algorithms}
+
+\begin{definitionbox}[RedOrange]{data structure}
+    \begin{center}
+        a method of storing data in the memory of the computer
+    \end{center}
+\end{definitionbox}
+
+\begin{center}
+    \begin{tabular}{| 
+        >{\columncolor{RedOrange!10}} l | 
+        >{\columncolor{RedOrange!10}}l | 
+        >{\columncolor{RedOrange!10}}l |}
+        \hline
+        \multicolumn{1}{|>{\columncolor{RedOrange!30}} c|}{\textbf{convention}} & \multicolumn{1}{>{\columncolor{RedOrange!30}}c|}{\textbf{data type}} & \multicolumn{1}{>{\columncolor{RedOrange!30}}c|}{\textbf{notes}}\\
+        \hline
+        simple & single variable & stores data according to its type \\
+        sophisticated & object & stores data according to the definition of the class \\
+        functional & array & stores a list of data of objects from a specific type/class \\
+        better & generic array & stores a list of objects from any class \\
+        \hline
+    \end{tabular}
+\end{center}
+
+\begin{definitionbox}[RedOrange]{algorithm}
+    \begin{center}
+        used to manipulate data structures 
+    \end{center}
+\end{definitionbox}
+
+\begin{itemize}
+    \item actions/algorithms that can be performed on an array:
+        \begin{itemize}
+            \item \textcolor{RedOrange}{\textbf{retrieve (get)}} an element from the list 
+            \item \textcolor{RedOrange}{\textbf{insert}} an element into the list 
+            \item \textcolor{RedOrange}{\textbf{delete}} an element from the list 
+            \item \textcolor{RedOrange}{\textbf{count}} the number of elements in the list 
+            \item determine whether an element is \textcolor{RedOrange}{\textbf{in}} a list 
+            \item check whether the list is \textcolor{RedOrange}{\textbf{empty}}
+        \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+    \item if we want to create our own custom list we have to write the code for these actions
+\end{itemize}
+
+\subsection{\texttt{TestMyArrayList.java Class}}
+
+\javacode{x}{}{Code/SU3/Session_1/Snippets/MyArrayList.java}
+
+\paragraph*{Setup}
+
+\javacode{x}{firstline=1, lastline=8}{Code/SU3/Session_1/Snippets/MyArrayList.java}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 1:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] the heading of the class contains an \texttt{<E>}
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 3:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] \texttt{size}: the number of elements currently in the list 
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 4:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] \texttt{data}: an array of 100 objects is created
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+
+\begin{itemize}
+    \item[] remember that the \texttt{Object} class has methods that are available in all classes 
+    \item[] we use \texttt{Object} because \texttt{Java} does not permit us to create an array of \texttt{<E>}, so we create an array of \texttt{Objects} and assign it to a reference to \texttt{E}
+    \item[] the type identifier \texttt{E} is a placeholder for any type 
+    \item[] the type name is only provided in the test program and is received as a special type of parameter in the heading (\textcolor{RedOrange}{\textbf{line 1}}) inside the \texttt{< >}
+\end{itemize}
+
+\newpage
+
+\paragraph*{\texttt{add() Method}}
+
+\javacode{x}{firstline=10, lastline=21}{Code/SU3/Session_1/Snippets/MyArrayList.java}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 11:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] the heading indicates that the aim is to \texttt{add} an element to the list in a specific position
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 13 - 15:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] the index is validated using exception handling
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}[c]{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 17 - 18:}}
+\end{minipage}
+\begin{minipage}[c]{0.85\textwidth}
+    \begin{itemize}
+        \item[] all the elements after the new \texttt{index} parameter value are moved one position backwards 
+        \item[] note that the \mintinline{java}{for} loop starts at the final element and moves one position backwards - this is repeated for all the elements up to, and including, the desired new position
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.2cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}%
+    \textcolor{RedOrange}{\textbf{line 19:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] the parameter object is added into the array at the desired position
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 20:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] increase the \texttt{size} variable since there is one more element in the array
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+
+
+\paragraph*{\texttt{contains()} Method}
+
+\javacode{x}{firstline=23, lastline=26}{Code/SU3/Session_1/Snippets/MyArrayList.java}
+
+
+\begin{itemize}
+    \item[] the purpose of this method is to determine if the parameter object \texttt{e} is present in the array 
+\end{itemize}
+
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 24:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] the entire array is traversed
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 25:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] the \texttt{equals} method from the \texttt{Object} class is called - so the objects are compared in terms of their reference addresses (except if the \texttt{equals} method is overridden in the class \texttt{E})
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+
+\newpage
+
+\paragraph*{\texttt{get()} Method}
+
+\javacode{x}{firstline=30, lastline=36}{Code/SU3/Session_1/Snippets/MyArrayList.java}
+
+\begin{itemize}
+    \item[] the purpose of this method is to \mintinline{java}{return} a value at a specific position, as indicated by the parameter
+\end{itemize}
+
+\paragraph*{\texttt{remove()} Method}
+
+\javacode{x}{firstline=38, lastline=48}{Code/SU3/Session_1/Snippets/MyArrayList.java}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 36:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] the item to be removed is at the position \texttt{index}, as received in the parameter
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 37 - 39:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] the index's validity is tested
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 40:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] the value to be removed is assigned to a new variable \texttt{e} because it is returned by the method (\textcolor{RedOrange}{\textbf{line 47}})
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 42 - 43:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] start at the position index and assign every position the value of its right-hand side neighbor - all of the elements to the right of the index is moved up one position left
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 46:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] the size variable is decreased because there is one less value in the list
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+
+\paragraph*{\texttt{toString()} Method}
+
+\javacode{x}{firstline=56, lastline=65}{Code/SU3/Session_1/Snippets/MyArrayList.java}
+
+\begin{itemize}
+    \item[] you never do screen output here - you don't know what the programmer plans on doing with the code, and your formatted string won't help
+\end{itemize}
+
+\paragraph*{\texttt{sortList()} Method}
+
+\javacode{x}{firstline=71, lastline=84}{Code/SU3/Session_1/Snippets/MyArrayList.java}
+
+\begin{itemize}
+    \item[] we are comparing object according to their \textcolor{RedOrange}{value} and \textbf{\textcolor{RedOrange}{not}} their \textcolor{RedOrange}{address}
+    \item[] we did override \texttt{equals()} to do the above - the problem is it only tests form equality
+    \item[] we need more than equality - we want to compare them in terms of $<$, $>$, and $==$
+    \item[] we use the \texttt{CompareTo()} method of the \texttt{Comparable} interface, which involves casting the \texttt{Object} variable to a \texttt{Comparable} variable, and then using the \texttt{CompareTo()} method
+    \item[] this is a bubble sort for sorting a list
+\end{itemize}
+
+%15/16
+\subsubsection{The \texttt{CompareTo()} Method}
+
+\javacode{x}{firstline=44, lastline=59}{Code/SU3/Session_1/Snippets/Circle.java}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line  47:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] the parameter is casted as a \texttt{Circle}
+    \end{itemize}
+\end{minipage}
+
+\newpage
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 49 - 59: }}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] the values of the areas are compared according to the rules of \texttt{CompareTo()}
+        \item[] \texttt{CompareTo()} should return a number:
+            \begin{itemize}
+                \item $>0$: the calling object is larger than the parameter object
+                \item $=0$: the calling object and the parameter object are equal
+                \item $<0$: the calling object is less than the parameter object
+            \end{itemize}
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.5cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+
+\subsubsection{Test Program}
+
+\javacode{x}{firstline=1, lastline=26}{Code/SU3/Session_1/Snippets/TestMyArrayList.java}
+
+\begin{itemize}
+    \item instead of using typical arrays and being responsible for writing all of the manipulation code every time they want to use an array, programmers can use this class that we have created for \textcolor{RedOrange}{any array}
+\end{itemize}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 3:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] the programmer only has to state what type of data they are storing in the array
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 14 - 21:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] our new array provides a method to add an item to the array
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+
+\begin{itemize}
+    \item all of the classes making use of the array must have the \texttt{CompareTo()} method
+\end{itemize}
+
+
+
+\subsection{For a Programmer to Use Our Class}
+
+\begin{itemize}
+    \item what is required to use \texttt{ArrayList}:
+        \begin{itemize}
+            \item[1.] the superclass must implement \texttt{Comparable}
+        \end{itemize}
+\end{itemize}
+
+\javacode{x}{firstline=2, lastline=2}{Code/SU3/Session_1/Snippets/GeometricObject.java}
+
+\begin{itemize}
+    \item []{}
+        \begin{itemize}
+            \item [2.] the subclass must implement \texttt{CompareTo()} with a parameter of the super class
+        \end{itemize}
+\end{itemize}
+
+\javacode{x}{firstline=44, lastline=44}{Code/SU3/Session_1/Snippets/Circle.java}
+
+\newpage
+
+%S2
+\section{Filtering a List}
+
+\subsection{Improvements to our \texttt{MyArrayList} Class}
+
+\begin{itemize}
+    \item[1.] in the previous \texttt{MyArrayList} class the maximum number of elements was 100 - see a better programming style below:
+\end{itemize}
+
+\javacode{x}{firstline=1, lastline=9}{Code/SU3/Session_2/MyArrayList.java}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line 4 and 7:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[] we can now use the constant \texttt{MAXELEMENTS} every time we need to consider the size of the array
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+
+\begin{itemize}
+    \item [2.] to clear the array is one of the basic manipulation operations of any list 
+\end{itemize}
+
+
+
+\noindent
+\begin{minipage}{0.35\textwidth}
+    \phantom{text}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+    \begin{tightcode}
+public void clear() {
+size = 0;
+}
+    \end{tightcode}
+\end{minipage}
+
+%4/21
+\subsection{The \texttt{Integer} Wrapper Class}
+
+\begin{itemize}
+    \item two types of data types 
+        \begin{itemize}
+            \item \textcolor{RedOrange}{primitive} types: \texttt{int}, \texttt{double} - lowercase
+            \item objects of \textcolor{RedOrange}{defined classes}: \texttt{String}, \texttt{Circle} - uppercase
+        \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+    \item objects that differ from primitive types $\rightarrow$ the name of the object is a separate variable containing the address of the first field of the object
+    \item \texttt{Java} provides "wrapper" classes for primitive types so that we can use them as \texttt{Objects} - these classes contains \texttt{toString()} and \texttt{CompareTo()} methods 
+    \item when we create generic arrays, we create a list of \texttt{Objects} - we cannot load a primitive type variable into the array, we need to load objects of the wrapper class
+\end{itemize}
+
+\begin{itemize}
+    \item consider the following code - this is the depiction in memory of these types
+\end{itemize}
+
+\noindent
+\begin{minipage}{0.5\textwidth}
+    \begin{tightcode}
+int a = 4;
+    \end{tightcode}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+    \begin{tightcode}
+Integer i2 = new Integer(5);
+    \end{tightcode}
+\end{minipage}
+
+\noindent
+\begin{minipage}{0.5\textwidth}
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{Images/SU3/3_1.pdf}
+    \end{center}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{Images/SU3/3_2.pdf}
+    \end{center}
+\end{minipage}
+
+\newpage
+\paragraph*{How to Draw an Array Properly}
+
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{Images/SU3/3_3.pdf}
+\end{center}
+
+\begin{mybox}[RedOrange]{}
+    \begin{center}
+        the name of the object is a separate variable containing the \textcolor{RedOrange}{address} of the first field of the object
+    \end{center}
+\end{mybox}
+
+%7/21
+\subsection{Problem to be Implemented}
+
+\begin{mybox}[Gray]{}
+    Design an implement a \texttt{filter()} method for the \texttt{MyArrayList} class. The method should receive two generic objects as parameters and remove all of the items from the calling list that is smaller than the first parameter and larger than the second parameter. The original array should be updated (filter the array according to the parameters).
+\end{mybox}
+
+\begin{itemize}
+    \item [1.] follow the three steps to design the method:
+        \begin{enumerate}
+            \item write down the method call in a test program with variable types
+            \item draw a diagram 
+            \item write down the overall plan 
+        \end{enumerate}
+\end{itemize}
+
+\begin{itemize}
+    \item [2.] write down the steps:
+        \begin{enumerate}
+            \item identify data structures in terms of calling/parameter, and return 
+            \item write down the call to the method as well as the heading of the method
+            \item write down the programming steps
+        \end{enumerate}
+\end{itemize}
+
+\begin{itemize}
+    \item [4.] write the \texttt{Java} code from your planning
+    \item [5.] design a test method
+\end{itemize}
+
+%8/21
+\subsubsection{Step 1 - Draw a Diagram}
+
+\paragraph{Write Down the Method Call in a Test Program with the Variable Types}
+
+\noindent
+\begin{minipage}{0.3\textwidth}
+    \phantom{text}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+    \begin{tightcode}
+MyArrayList list1; E low, E high;
+list1.filter(low, high);
+    \end{tightcode}
+\end{minipage}
+
+\newpage
+
+\paragraph{Draw the Diagram}
+
+\begin{center}
+    \includegraphics[width=0.85\textwidth]{Images/SU3/3_4.pdf}
+\end{center}
+
+\paragraph{Write Down the Overall Plan}
+
+\begin{center}
+    \includegraphics[width=0.65\textwidth]{Images/SU3/3_5.pdf}
+\end{center}
+
+\begin{itemize}
+    \item there are two options:
+        \begin{enumerate}
+            \item traverse the calling array, check each element, and cal \texttt{remove()} if the element is invalid 
+                \begin{itemize}
+                    \item[] \texttt{remove()} shifts the cells, so it is $O(n)$ every time it is called - if we call it for every element in the array - in the worst case scenario it is $(n)O(n) = O(n^2)$
+                \end{itemize}
+            \item create a new array and only load valid elements to replace the original array
+                \begin{itemize}
+                    \item [] we only have to traverse the array once, which is $O(n)$ - because the copy at the end is only $O(1)$ since we copy only 1 address (the name of an object is a variable containing the address of the starting position)
+                \end{itemize}
+        \end{enumerate}
+\end{itemize}
+
+\begin{itemize}
+    \item[$\therefore$] option 2 is better
+\end{itemize}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{input:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+        \includegraphics[width=1\textwidth]{Images/SU3/3_4.pdf}
+\end{minipage}
+
+\vspace{0.25cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{processing:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{center}
+        create a new array and only load valid elements, and replace the original array
+    \end{center}
+\end{minipage}
+
+\vspace{0.25cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{output:}}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+        \includegraphics[width=0.75\textwidth]{Images/SU3/3_5.pdf}
+\end{minipage}
+
+%12/21
+\subsubsection{Step 2 - Write Down the Steps}
+
+\paragraph{Identify Data Structures}
+
+\begin{itemize}
+    \item \texttt{list1} is the calling list 
+    \item \texttt{low} and \texttt{high} are parameters of type \texttt{E}
+\end{itemize}
+
+\paragraph{Method Call and Heading}
+
+\noindent
+\begin{minipage}{0.25\textwidth}
+    \phantom{text}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+    \begin{tightcode}
+list1.filter(new Integer(3)), new Integer(5);
+public void filter(E low, E high)
+    \end{tightcode}
+\end{minipage}
+
+\newpage
+
+\paragraph{Programming Steps}
+
+\noindent
+\texttt{create a new array called temp to be traversed with the counter j}\\
+\texttt{traverse the calling array with the counter i and compare each value to the parameters}\\
+\texttt{if data[i] >= low and data[i] <= high then}\\
+
+\vspace{-0.5cm}
+
+\texttt{temp[j] = data[i]}\\
+
+\vspace{-0.5cm}
+
+\texttt{j++}\\
+
+\vspace{-0.5cm}
+
+\noindent
+\texttt{data must be replaced by temp}\\
+\texttt{size must be replaced by j}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{comment}
+
+\javacode{x}{firstline=44, lastline=44}{Code/SU3/Session_2/}
+
+\vspace{0.1cm}
+\noindent
+\textcolor{RedOrange}{\rule{\textwidth}{0.5pt}}
+\vspace{-0.1cm}
+
+\noindent
+\begin{minipage}{0.15\textwidth}
+    \textcolor{RedOrange}{\textbf{line }}
+\end{minipage}
+\begin{minipage}{0.85\textwidth}
+    \begin{itemize}
+        \item[]
+    \end{itemize}
+\end{minipage}
+
+\includegraphics[width=1\textwidth]{Images/SU3/3_2.pdf}
+
+\textcolor{RedOrange}{\textbf{line }}
+
+
+
+
+
+>{\columncolor{RedOrange!10}}
+
+
+
+
+
+
+
+\end{comment}
